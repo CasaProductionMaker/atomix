@@ -1,0 +1,127 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+public class Electron : MonoBehaviour
+{
+    public string electronName;
+    public string description;
+    public string actualDescription;
+    [TextArea] public string stats;
+    [Header("Electron Stats")]
+    public float maxHealth;
+    public float damage;
+    public float size;
+    public float reload;
+    public float secondaryReload;
+    public float health;
+    public float timeDied;
+    public bool isDead;
+    public bool isDetached;
+    public bool doesExpand = true;
+    public bool unstackable = false;
+    public PlayerElectronController player;
+    public SpawnedElectron spawnedElectronInfo;
+    public bool isPlayerDead = false;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        isDead = true;
+        timeDied = Time.time;
+        GetComponent<CircleCollider2D>().radius = size;
+    }
+
+    public void DieIfDead()
+    {
+        if (isPlayerDead) health = 0;
+        if(health <= 0 && !isDead)
+        {
+            timeDied = Time.time;
+            isDead = true;
+            isDetached = false;
+        }
+        if (isDead)
+        {
+            if (GetTimeSinceDied() >= reload)
+            {
+                health = maxHealth;
+                isDead = false;
+            }
+        }
+    }
+
+    public float GetTimeSinceDied()
+    {
+        return Time.time - timeDied;
+    }
+
+    public void CheckCollisions()
+    {
+        if (isDead) return;
+        
+        Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, size);
+        foreach (Collider2D collider in hit)
+        {
+            if (collider.gameObject.TryGetComponent(out Mob mob))
+            {
+                mob.TakeDamage(GetDamage(), gameObject);
+                health -= mob.bodyDamage;
+                Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
+                float totalDistance = size + (collider as CircleCollider2D).radius;
+                float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
+                transform.position += (Vector3)(-hitAngle * multiplier);
+                mob.MoveVector(hitAngle * 0.02f);
+
+                Neutralizer neutralizer = player.GetActiveNeutralizer();
+                if (neutralizer != null)
+                {
+                    mob.transform.position = neutralizer.transform.position;
+                }
+            }
+        }
+    }
+
+    public void TurnAnimation()
+    {
+        transform.Rotate(0f, 0f, 5f * Time.deltaTime);
+    }
+
+    public void SummonDied()
+    {
+        health = 0;
+    }
+    public bool isOutOfBounds()
+    {
+        return Mathf.Abs(transform.position.x) + size > 10.5f || Mathf.Abs(transform.position.y) + size > 10.5f;
+    }
+    public void StayInBounds()
+    {
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, -10.5f + size, 10.5f - size);
+        pos.y = Mathf.Clamp(pos.y, -10.5f + size, 10.5f - size);
+        transform.position = pos;
+    }
+
+    public virtual float GetDamage()
+    {
+        float returnDamage = damage;
+        
+        // Loop over build for cores
+        for (int i = 0; i < player.getMaxElectronsPerShell().Length; i++)
+        {
+            List<SpawnedElectron> electrons = player.electronsPerShell[i];
+            foreach (SpawnedElectron electron in electrons)
+            {
+                if (electron.isEmptySlot) continue;
+                Electron electronReference = electron.electronReference;
+                
+                if (electronReference is Core core && spawnedElectronInfo.shell == 2)
+                {
+                    returnDamage *= core.damageMultiplier;
+                }
+            }
+        }
+
+        return returnDamage;
+    }
+}
