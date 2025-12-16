@@ -64,7 +64,6 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginD
 
     public virtual void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("Clicked on slot with electron: " + electronInSlot + " Amount: " + amount);
         if(electronInSlot == null || amount <= 0) return;
 
         draggingElectron = Instantiate(draggingElectronPrefab, transform.position, Quaternion.identity);
@@ -93,7 +92,6 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginD
         playerElectronController.PickUpElectron(electronInSlot);
         if (amount <= 0)
         {
-            Debug.Log("Amount: " + amount);
             Destroy(gameObject);
         }
     }
