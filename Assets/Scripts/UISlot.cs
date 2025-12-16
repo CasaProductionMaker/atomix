@@ -112,7 +112,6 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginD
                     {
                         Destroy(gameObject);
                     }
-                    Debug.Log("Inserted into empty hotbar slot");
                     return;
                 } else { // There is something in there
                     if (isHotbarSlot) // Coming from hotbar?
@@ -123,7 +122,6 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginD
                         playerElectronController.InsertElectronToBuild(slot.shellID, slot.slotID, draggingElectron.GetComponent<UISlot>().electronInSlot);
 
                         Destroy(draggingElectron);
-                        Debug.Log("Swapped hotbar slots");
                         return;
                     } else { // Coming from inventory then
                         playerElectronController.AddElectronToInventory(slot.electronInSlot);
@@ -134,7 +132,6 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginD
                         {
                             Destroy(gameObject);
                         }
-                        Debug.Log("Swapped inventory and hotbar slots");
                         return;
                     }
                 }
