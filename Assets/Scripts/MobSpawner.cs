@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MobSpawner : MonoBehaviour
 {
     public Vector2 mapSize = new Vector2(20f, 20f);
+    public Transform[] borders;
     public Transform playerTransform;
 
     public SpawnableMob[] spawnableMobs;
@@ -21,6 +22,18 @@ public class MobSpawner : MonoBehaviour
     {
         lastSpawnTime = Time.time;
         mobsLeftInWave = waveNumber * 2;
+
+        //Position
+        borders[0].transform.position = new Vector3(mapSize.x + 0.75f, 0, 0);
+        borders[1].transform.position = new Vector3(0, -mapSize.y - 0.75f, 0);
+        borders[2].transform.position = new Vector3(-mapSize.x - 0.75f, 0, 0);
+        borders[3].transform.position = new Vector3(0, mapSize.y + 0.75f, 0);
+
+        //Scale
+        borders[0].transform.localScale = new Vector3(0.5f, 2 * mapSize.y + 2, 1);
+        borders[1].transform.localScale = new Vector3(2 * mapSize.x + 2, 0.5f, 1);
+        borders[2].transform.localScale = new Vector3(0.5f, 2 * mapSize.y + 2, 1);
+        borders[3].transform.localScale = new Vector3(2 * mapSize.x + 2, 0.5f, 1);
     }
 
     // Update is called once per frame

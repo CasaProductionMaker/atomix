@@ -30,19 +30,20 @@ public class Saw : Electron
         if (isOutOfBounds())
         {
             Vector2 hitAngle = Vector2.zero;
-            if (transform.position.x + size > 10.5f)
+            Vector2 bounds = FindFirstObjectByType<MobSpawner>().mapSize + new Vector2(0.5f, 0.5f);
+            if (transform.position.x + size > bounds.x)
             {
                 hitAngle = new Vector2(-1, 0);
             }
-            if (transform.position.y + size > 10.5f)
+            if (transform.position.y + size > bounds.y)
             {
                 hitAngle = new Vector2(0, -1);
             }
-            if (transform.position.x - size < -10.5f)
+            if (transform.position.x - size < -bounds.x)
             {
                 hitAngle = new Vector2(1, 0);
             }
-            if (transform.position.y - size < -10.5f)
+            if (transform.position.y - size < -bounds.y)
             {
                 hitAngle = new Vector2(0, 1);
             }

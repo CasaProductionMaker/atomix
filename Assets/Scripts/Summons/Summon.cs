@@ -62,8 +62,10 @@ public class Summon : MonoBehaviour
 
     public void StayInBounds()
     {
-        Vector2 bounds = new Vector2(10f, 10f);
-
+        Vector2 bounds = FindFirstObjectByType<MobSpawner>().mapSize + new Vector2(0.5f, 0.5f);
+        float size = GetComponent<CircleCollider2D>().radius;
+        bounds -= new Vector2(size, size);
+        
         if(transform.position.x > bounds.x)
         {
             transform.position = new Vector3(bounds.x, transform.position.y, transform.position.z);

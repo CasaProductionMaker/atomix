@@ -18593,7 +18593,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9938939b60c4948df89f4466e75bb003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MobSpawner
-  mapSize: {x: 10, y: 10}
+  mapSize: {x: 5, y: 5}
+  borders:
+  - {fileID: 667721776}
+  - {fileID: 815997381}
+  - {fileID: 315164846}
+  - {fileID: 1814575876}
   playerTransform: {fileID: 921121866}
   spawnableMobs:
   - mobPrefab: {fileID: 8925941467523404748, guid: 1001c9be152f6420897fbe113b4fa564, type: 3}

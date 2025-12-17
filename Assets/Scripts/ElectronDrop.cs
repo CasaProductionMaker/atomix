@@ -20,8 +20,9 @@ public class ElectronDrop : MonoBehaviour
     public void StayInBounds()
     {
         Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, -10f, 10f);
-        pos.y = Mathf.Clamp(pos.y, -10f, 10f);
+        Vector2 bounds = FindFirstObjectByType<MobSpawner>().mapSize;
+        pos.x = Mathf.Clamp(pos.x, -bounds.x, bounds.x);
+        pos.y = Mathf.Clamp(pos.y, -bounds.y, bounds.y);
         transform.position = pos;
     }
 }

@@ -92,13 +92,15 @@ public class Electron : MonoBehaviour
     }
     public bool isOutOfBounds()
     {
-        return Mathf.Abs(transform.position.x) + size > 10.5f || Mathf.Abs(transform.position.y) + size > 10.5f;
+        Vector2 bounds = FindFirstObjectByType<MobSpawner>().mapSize + new Vector2(0.5f, 0.5f);
+        return Mathf.Abs(transform.position.x) + size > bounds.x || Mathf.Abs(transform.position.y) + size > bounds.y;
     }
     public void StayInBounds()
     {
         Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, -10.5f + size, 10.5f - size);
-        pos.y = Mathf.Clamp(pos.y, -10.5f + size, 10.5f - size);
+        Vector2 bounds = FindFirstObjectByType<MobSpawner>().mapSize + new Vector2(0.5f, 0.5f);
+        pos.x = Mathf.Clamp(pos.x, size - bounds.x, bounds.x - size);
+        pos.y = Mathf.Clamp(pos.y, size - bounds.y, bounds.y - size);
         transform.position = pos;
     }
 

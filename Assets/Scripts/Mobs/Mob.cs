@@ -129,7 +129,7 @@ public class Mob : MonoBehaviour
 
     public void StayInBounds()
     {
-        Vector2 bounds = new Vector2(10.5f, 10.5f);
+        Vector2 bounds = FindFirstObjectByType<MobSpawner>().mapSize + new Vector2(0.5f, 0.5f);
         float size = GetComponent<CircleCollider2D>().radius;
         bounds -= new Vector2(size, size);
 
@@ -153,7 +153,7 @@ public class Mob : MonoBehaviour
 
     public void DieIfOutOfBounds()
     {
-        Vector2 bounds = new Vector2(10.5f, 10.5f);
+        Vector2 bounds = FindFirstObjectByType<MobSpawner>().mapSize + new Vector2(0.5f, 0.5f);
         float size = GetComponent<CircleCollider2D>().radius;
         bounds -= new Vector2(size, size);
 

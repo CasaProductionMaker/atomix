@@ -58,21 +58,22 @@ public class Player : MonoBehaviour
         transform.position += (Vector3)velocity * Time.deltaTime;
         velocity *= 0.9f;
 
-        if (transform.position.y < -10f)
+        Vector2 bounds = FindFirstObjectByType<MobSpawner>().mapSize;
+        if (transform.position.y < -bounds.y)
         {
-            transform.position = new Vector3(transform.position.x, -10f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -bounds.y, transform.position.z);
         }
-        if (transform.position.y > 10f)
+        if (transform.position.y > bounds.y)
         {
-            transform.position = new Vector3(transform.position.x, 10f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, bounds.y, transform.position.z);
         }
-        if (transform.position.x < -10f)
+        if (transform.position.x < -bounds.x)
         {
-            transform.position = new Vector3(-10f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-bounds.x, transform.position.y, transform.position.z);
         }
-        if (transform.position.x > 10f)
+        if (transform.position.x > bounds.x)
         {
-            transform.position = new Vector3(10f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(bounds.x, transform.position.y, transform.position.z);
         }
 
         if (getHealth() <= 0f)

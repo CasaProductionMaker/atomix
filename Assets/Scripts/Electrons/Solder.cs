@@ -32,7 +32,7 @@ public class Solder : Electron
 
         if (DistanceToPlayer() > 0.1f)
         {
-            transform.position = Vector2.Lerp(transform.position, player.transform.position, 0.2f);
+            transform.position = Vector2.Lerp(transform.position, player.transform.position, 0.3f);
         }
         else
         {
