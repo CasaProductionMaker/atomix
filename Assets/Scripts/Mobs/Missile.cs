@@ -4,6 +4,7 @@ public class Missile : Mob
 {
     void Update()
     {
+        if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
         LookAtTarget();

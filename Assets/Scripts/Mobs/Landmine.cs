@@ -13,6 +13,7 @@ public class Landmine : Mob
 
     void Update()
     {
+        if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
         UpdateTimerText();
@@ -56,7 +57,7 @@ public class Landmine : Mob
                 player.TakeDamage(explosionDamage);
             }
         }
-        health = 0;
+        health.Value = 0;
         DieIfDeadWithoutDrops();
     }
 }

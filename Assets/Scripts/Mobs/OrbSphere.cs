@@ -7,6 +7,7 @@ public class OrbSphere : Mob
 
     void Update()
     {
+        if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
         Heal();
@@ -19,7 +20,7 @@ public class OrbSphere : Mob
         if (Time.time - lastHealTime < 1f) return;
 
         lastHealTime = Time.time;
-        health += heal;
-        if (health > maxHealth) health = maxHealth;
+        health.Value += heal;
+        if (health.Value > maxHealth) health.Value = maxHealth;
     }
 }

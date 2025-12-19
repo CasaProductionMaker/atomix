@@ -11,6 +11,7 @@ public class Turret : Mob
 
     void Update()
     {
+        if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
         UpdateHealthBar();

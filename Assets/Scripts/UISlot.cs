@@ -26,7 +26,11 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginD
     {
         UpdateSlotImage();
         canvas = GameObject.Find("Canvas").transform;
-        playerElectronController = GameObject.FindWithTag("Player").GetComponent<PlayerElectronController>();
+    }
+
+    public void SetPEC(PlayerElectronController newPEC)
+    {
+        playerElectronController = newPEC;
     }
 
     // Update is called once per frame

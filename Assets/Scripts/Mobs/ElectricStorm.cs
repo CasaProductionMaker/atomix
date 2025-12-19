@@ -16,6 +16,7 @@ public class ElectricStorm : Mob
 
     void Update()
     {
+        if (!IsOwner) return;
         PlaySpinAnimation();
         if (Time.time - lastTargetResetTime >= targetResetInterval) ChooseRandomTarget();
         MoveTowardsRandomTarget();

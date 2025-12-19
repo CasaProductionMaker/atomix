@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
 
     Vector2 velocity;
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
 
     // References
     public PlayerElectronController electronController;
+    public GameObject myCamera;
 
     // Effects
     public GameObject nucleusPopEffect;
@@ -29,6 +31,10 @@ public class Player : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (!IsOwner) {
+            Destroy(myCamera);
+            return;
+        }
         electronController = GetComponent<PlayerElectronController>();
         health = maxHealth;
         healthBar.value = health / maxHealth;
@@ -38,6 +44,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (isDead) return;
+        if (!IsOwner) return;
 
         velocity += moveInput.action.ReadValue<Vector2>().normalized * speed;
 

@@ -4,6 +4,7 @@ public class LaserScrew : Mob
 {
     void Update()
     {
+        if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
         if (target != null)

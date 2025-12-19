@@ -1,14 +1,15 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Mob : MonoBehaviour
+public class Mob : NetworkBehaviour
 {
     public string mobName;
     public float maxHealth;
     public float speed;
     public float bodyDamage;
     public float aggroRange = 10f;
-    public float health;
+    public NetworkVariable<float> health = new NetworkVariable<float>(1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public Transform target;
     public Vector2 velocity;
     public bool randomRotation = true;
@@ -20,20 +21,21 @@ public class Mob : MonoBehaviour
 
     protected void Start()
     {
+        if (!IsOwner) return;
         if (randomRotation) GFX.rotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
-        health = maxHealth;
-        healthBar.value = health / maxHealth;
+        health.Value = maxHealth;
+        healthBar.value = health.Value / maxHealth;
     }
 
     public void TakeDamage(float damage, GameObject damager)
     {
-        health -= damage;
+        health.Value -= damage;
         OnDamaged(damager);
     }
 
     public bool IsDead()
     {
-        return health <= 0;
+        return health.Value <= 0;
     }
 
     public void MoveVector(Vector2 direction)
@@ -159,7 +161,7 @@ public class Mob : MonoBehaviour
 
         if(transform.position.x > bounds.x || transform.position.x < -bounds.x || transform.position.y > bounds.y || transform.position.y < -bounds.y)
         {
-            health = 0;
+            health.Value = 0;
         }
     }
 
@@ -170,7 +172,7 @@ public class Mob : MonoBehaviour
 
     public void UpdateHealthBar()
     {
-        healthBar.value = health / maxHealth;
+        healthBar.value = health.Value / maxHealth;
     }
 }
 

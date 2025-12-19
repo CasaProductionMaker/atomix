@@ -9,6 +9,7 @@ public class AI : Mob
 
     void Update()
     {
+        if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
         LookAtTarget();
@@ -39,6 +40,6 @@ public class AI : Mob
                 player.TakeDamage(explosionDamage);
             }
         }
-        health = 0;
+        health.Value = 0;
     }
 }

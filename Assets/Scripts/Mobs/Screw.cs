@@ -4,6 +4,7 @@ public class Screw : Mob
 {
     void Update()
     {
+        if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
         if (target != null)

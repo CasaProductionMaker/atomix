@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
-public class PlayerElectronController : MonoBehaviour
+public class PlayerElectronController : NetworkBehaviour
 {
 
     // Electrons
@@ -33,16 +34,26 @@ public class PlayerElectronController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if(!IsOwner) return;
+
         player = GetComponent<Player>();
         for (int i = 0; i < maxElectronsPerShell.Length; i++)
         {
             electronsPerShell[i] = new List<SpawnedElectron>();
             for (int j = 0; j < maxElectronsPerShell[i]; j++)
             {
+                int slotID = i * 8 + j;
+                GameObject slot = GameObject.Find("Slot (" + slotID + ")");
+                if (slot != null) uiSlots[slotID] = slot.GetComponent<UISlot>();
+                slot.GetComponent<UISlot>().SetPEC(this);
                 electronsPerShell[i].Add(new SpawnedElectron(true));
             }
         }
-        AddElectronToBuild(startingElectronPrefab);
+        Debug.Log(GameObject.Find("InventoryContent"));
+        inventoryContainer = GameObject.Find("InventoryContent").transform;
+        inventoryObject = GameObject.Find("Inventory");
+        inventoryObject.SetActive(false);
+        AddElectronToBuild(startingElectronPrefab.GetComponent<Electron>().electronID);
 
         toggleInventory.action.performed += ctx =>
         {
@@ -70,6 +81,8 @@ public class PlayerElectronController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!IsOwner) return;
+
         if (player.getHealth() <= 0f) {
             //KillAllElectrons();
             return;
@@ -168,6 +181,7 @@ public class PlayerElectronController : MonoBehaviour
                 float easing = 20f;
                 if (electronReference is HeavyElectron) easing = 10f;
                 electronReference.transform.position = Vector2.Lerp(electronReference.transform.position, targetPosition, easing * Time.deltaTime);
+                Debug.Log(electronReference);
 
                 // Electric storm movement
                 if (electronReference is ChargeGenerator chargeGenerator)
@@ -202,7 +216,7 @@ public class PlayerElectronController : MonoBehaviour
 
     public void PickUpElectron(GameObject electronPrefab)
     {
-        if(!AddElectronToBuild(electronPrefab))
+        if(!AddElectronToBuild(electronPrefab.GetComponent<Electron>().electronID))
         {
             AddElectronToInventory(electronPrefab);
         }
@@ -289,7 +303,7 @@ public class PlayerElectronController : MonoBehaviour
         return bonus;
     }
 
-    public bool AddElectronToBuild(GameObject electronPrefab)
+    public bool AddElectronToBuild(int electronID)
     {
         int shell = -1;
         int position = -1;
@@ -310,16 +324,35 @@ public class PlayerElectronController : MonoBehaviour
 
         if (shell == -1) return false;
 
-        GameObject newElectronObject = Instantiate(electronPrefab, transform.position, Quaternion.identity);
+        SpawnElectronOnNetworkServerRpc(electronID, shell, position, NetworkManager.LocalClientId);
 
-        // find position to insert
+        return true;
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SpawnElectronOnNetworkServerRpc(int objectID, int shell, int position, ulong clientID)
+    {
+        LangObject langObject = GameObject.Find("LangObject").GetComponent<LangObject>();
+        GameObject electronPrefab = langObject.electronsInGame[objectID];
+        GameObject newElectronObject = Instantiate(electronPrefab, transform.position, Quaternion.identity);
+        newElectronObject.GetComponent<NetworkObject>().Spawn(true);
+        newElectronObject.GetComponent<NetworkObject>().ChangeOwnership(clientID);
+
+        SpawnedElectronClientRpc(newElectronObject.GetComponent<NetworkObject>().NetworkObjectId, objectID, shell, position);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void SpawnedElectronClientRpc(ulong networkObjectId, int electronID, int shell, int position)
+    {
+        if (!IsOwner) return;
+        NetworkObject newElectronObject = NetworkManager.SpawnManager.SpawnedObjects[networkObjectId];
+        LangObject langObject = GameObject.Find("LangObject").GetComponent<LangObject>();
+        GameObject electronPrefab = langObject.electronsInGame[electronID];
 
         electronsPerShell[shell][position] = new SpawnedElectron(shell, newElectronObject.GetComponent<Electron>(), electronPrefab);
         electronsPerShell[shell][position].electronReference.player = this;
         UpdatePetalAngles();
         UpdateHotbarUI();
-
-        return true;
     }
 
     public bool InsertElectronToBuild(int shell, int position, GameObject electronPrefab)
@@ -368,7 +401,7 @@ public class PlayerElectronController : MonoBehaviour
             List<SpawnedElectron> electrons = electronsPerShell[i];
             foreach (SpawnedElectron electron in electrons)
             {
-
+                Debug.Log(uiSlots[slotID]);
                 uiSlots[slotID].electronInSlot = electron.isEmptySlot ? null : electron.electronPrefab;
                 uiSlots[slotID].amount = electron.isEmptySlot ? 0 : 1;
                 uiSlots[slotID].UpdateSlotImage();

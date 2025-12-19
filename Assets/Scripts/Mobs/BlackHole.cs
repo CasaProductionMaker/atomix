@@ -10,6 +10,7 @@ public class BlackHole : Mob
 
     void Update()
     {
+        if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
         UpdateHealthBar();

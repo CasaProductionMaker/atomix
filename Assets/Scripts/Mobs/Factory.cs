@@ -15,6 +15,7 @@ public class Factory : Mob
     }
     void Update()
     {
+        if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
         UpdateHealthBar();

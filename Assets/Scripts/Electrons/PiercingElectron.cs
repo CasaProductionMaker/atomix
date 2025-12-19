@@ -21,7 +21,7 @@ public class PiercingElectron : Electron
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
                 float actualDamageMultiplier = 1f;
-                if (mob.health / mob.maxHealth >= 0.8f) actualDamageMultiplier = damageMultiplier;
+                if (mob.health.Value / mob.maxHealth >= 0.8f) actualDamageMultiplier = damageMultiplier;
                 mob.TakeDamage(GetDamage() * actualDamageMultiplier, gameObject);
                 health -= mob.bodyDamage;
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;

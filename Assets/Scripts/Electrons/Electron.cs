@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class Electron : MonoBehaviour
 {
+    public int electronID;
     public string electronName;
     public string description;
     public string actualDescription;
