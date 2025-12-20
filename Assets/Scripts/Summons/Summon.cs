@@ -1,14 +1,15 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Summon : MonoBehaviour
+public class Summon : NetworkBehaviour
 {
     public string mobName;
     public float maxHealth;
     public float speed;
     public float bodyDamage;
     public float aggroRange = 10f;
-    public float health;
+    public NetworkVariable<float> health = new NetworkVariable<float>(1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public Transform target;
     public Vector2 velocity;
 
@@ -18,18 +19,18 @@ public class Summon : MonoBehaviour
 
     protected void Start()
     {
-        health = maxHealth;
-        healthBar.value = health / maxHealth;
+        health.Value = maxHealth;
+        healthBar.value = health.Value / maxHealth;
     }
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
+        health.Value -= damage;
     }
 
     public bool IsDead()
     {
-        return health <= 0;
+        return health.Value <= 0;
     }
 
     public void MoveVector(Vector2 direction)
@@ -126,6 +127,6 @@ public class Summon : MonoBehaviour
 
     public void UpdateHealthBar()
     {
-        healthBar.value = health / maxHealth;
+        healthBar.value = health.Value / maxHealth;
     }
 }

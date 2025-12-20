@@ -10,7 +10,7 @@ public class Player : NetworkBehaviour
     Vector2 velocity;
     [SerializeField] float speed = 5f;
     [SerializeField] float maxHealth = 100f;
-    [SerializeField] float health;
+    [SerializeField] NetworkVariable<float> health = new NetworkVariable<float>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [SerializeField] float bodyDamage = 3f;
     public GameObject deathScreen;
     bool isDead = false;
@@ -36,15 +36,18 @@ public class Player : NetworkBehaviour
             return;
         }
         electronController = GetComponent<PlayerElectronController>();
-        health = maxHealth;
-        healthBar.value = health / maxHealth;
+        health.Value = maxHealth;
+        healthBar.value = health.Value / maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (isDead) return;
-        if (!IsOwner) return;
+        if (!IsOwner) {
+            healthBar.value = health.Value / maxHealth;
+            return;
+        }
 
         velocity += moveInput.action.ReadValue<Vector2>().normalized * speed;
 
@@ -54,8 +57,8 @@ public class Player : NetworkBehaviour
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
                 mob.TakeDamageServerRpc(bodyDamage);
-                health -= mob.bodyDamage;
-                healthBar.value = health / getMaxHealth();
+                health.Value -= mob.bodyDamage;
+                healthBar.value = health.Value / getMaxHealth();
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 velocity -= hitAngle * 1.5f;
                 mob.ApplyVelocityServerRpc(hitAngle * 0.1f);
@@ -88,8 +91,8 @@ public class Player : NetworkBehaviour
             Nucleus activeNucleus = electronController.GetActiveNucleus();
             if (activeNucleus != null)
             {
-                health = getMaxHealth();
-                healthBar.value = health / getMaxHealth();
+                health.Value = getMaxHealth();
+                healthBar.value = health.Value / getMaxHealth();
                 transform.position = activeNucleus.transform.position;
                 Instantiate(nucleusPopEffect, activeNucleus.transform.position, Quaternion.identity);
                 activeNucleus.health = 0;
@@ -121,23 +124,23 @@ public class Player : NetworkBehaviour
 
     public void Heal(float amount)
     {
-        health += amount;
-        if (health > getMaxHealth())
+        health.Value += amount;
+        if (health.Value > getMaxHealth())
         {
-            health = getMaxHealth();
+            health.Value = getMaxHealth();
         }
-        healthBar.value = health / getMaxHealth();
+        healthBar.value = health.Value / getMaxHealth();
     }
 
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        healthBar.value = health / getMaxHealth();
+        health.Value -= damage;
+        healthBar.value = health.Value / getMaxHealth();
     }
 
     public float getHealth()
     {
-        return health;
+        return health.Value;
     }
     public float getMaxHealth()
     {

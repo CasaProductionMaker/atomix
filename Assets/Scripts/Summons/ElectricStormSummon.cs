@@ -15,6 +15,7 @@ public class ElectricStormSummon : Summon
 
     void Update()
     {
+        if (!IsOwner) return;
         PlaySpinAnimation();
         if (Time.time - lastTargetResetTime >= targetResetInterval) ChooseRandomTarget();
         MoveTowardsRandomTarget();

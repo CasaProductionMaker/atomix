@@ -8,6 +8,7 @@ public class AISummon : Summon
 
     void Update()
     {
+        if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
         LookAtTarget();
@@ -39,7 +40,7 @@ public class AISummon : Summon
                 mob.TakeDamageServerRpc(explosionDamage);
             }
         }
-        health = 0;
+        health.Value = 0;
     }
 
     void DieIfSpawnerDead()

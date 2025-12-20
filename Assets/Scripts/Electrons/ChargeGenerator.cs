@@ -19,7 +19,7 @@ public class ChargeGenerator : Electron
     {
         if (!hasSpawnedStorm() && (Time.time - timeDied) >= reload + secondaryReload)
         {
-            electricStormInstance = Instantiate(electricStormPrefab, transform.position, Quaternion.identity);
+            electricStormInstance = Instantiate(electricStormPrefab, transform.position, Quaternion.identity); // Start here, make it a serverRpc somehow
             electricStormInstance.GetComponent<ElectricStormSummon>().parentElectron = this;
         }
     }
