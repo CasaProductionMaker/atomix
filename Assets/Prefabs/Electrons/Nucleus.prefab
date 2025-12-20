@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 726057052383103678}
   - component: {fileID: 4292233407239550010}
+  - component: {fileID: 4799052350421055084}
   - component: {fileID: 7517943605476248947}
   - component: {fileID: 8852136689437314356}
   - component: {fileID: 3360600523092083604}
-  - component: {fileID: 4799052350421055084}
   - component: {fileID: -7669360201140889661}
   m_Layer: 0
   m_Name: Nucleus
@@ -95,6 +95,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4799052350421055084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3520629914196095728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 770322449
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &7517943605476248947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123667f30b5a740819ef09408366342a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nucleus
+  ShowTopMostFoldoutHeaderGroup: 1
   electronID: 22
   electronName: Nucleus
   description: How. Are you. Orbiting yourself.
@@ -146,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f16155054dbc437f8c72ab01384d69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NormalElectron
+  ShowTopMostFoldoutHeaderGroup: 1
   electronID: 0
   electronName: 
   description: 
@@ -208,31 +235,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.47
---- !u!114 &4799052350421055084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3520629914196095728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 770322449
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &-7669360201140889661
 MonoBehaviour:
   m_ObjectHideFlags: 0

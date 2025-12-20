@@ -9,13 +9,13 @@ public class AI : Mob
 
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
         LookAtTarget();
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
     }
 
@@ -27,7 +27,7 @@ public class AI : Mob
         GFX.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    public override void OnDamaged(GameObject other)
+    public override void OnDamaged()
     {
         GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
         explosion.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);

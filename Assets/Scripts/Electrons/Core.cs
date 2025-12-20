@@ -6,6 +6,7 @@ public class Core : Electron
     public GameObject effects;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         EffectsLogic();
         if (isDead) return;

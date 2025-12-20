@@ -7,11 +7,11 @@ public class OrbSphere : Mob
 
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
         Heal();
-        UpdateHealthBar();
         DieIfDead();
     }
 

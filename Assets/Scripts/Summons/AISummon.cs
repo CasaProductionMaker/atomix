@@ -36,7 +36,7 @@ public class AISummon : Summon
         {
             if(collider.TryGetComponent(out Mob mob))
             {
-                mob.TakeDamage(explosionDamage, gameObject);
+                mob.TakeDamageServerRpc(explosionDamage);
             }
         }
         health = 0;

@@ -6,6 +6,7 @@ public class Taser : Electron
     public GameObject stunEffectPrefab;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         CheckCollisions();
@@ -21,13 +22,13 @@ public class Taser : Electron
         {
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
-                mob.TakeDamage(damage, gameObject);
+                mob.TakeDamageServerRpc(damage);
                 health -= mob.bodyDamage;
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 float totalDistance = size + (collider as CircleCollider2D).radius;
                 float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
                 transform.position += (Vector3)(-hitAngle * multiplier);
-                mob.MoveVector(hitAngle * 0.02f);
+                mob.MoveVectorServerRpc(hitAngle * 0.02f);
                 Instantiate(stunEffectPrefab, mob.transform.position, Quaternion.identity).GetComponent<StunEffect>().Initialize(duration, mob);
 
                 Neutralizer neutralizer = player.GetActiveNeutralizer();

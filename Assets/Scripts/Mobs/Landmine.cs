@@ -13,16 +13,16 @@ public class Landmine : Mob
 
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
         UpdateTimerText();
         ExplodeIfNeeded();
-        UpdateHealthBar();
         DieIfDead();
     }
 
-    public override void OnDamaged(GameObject other)
+    public override void OnDamaged()
     {
         if (wasHit) return;
         timeHit = Time.time;

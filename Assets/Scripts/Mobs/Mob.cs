@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,10 +28,11 @@ public class Mob : NetworkBehaviour
         healthBar.value = health.Value / maxHealth;
     }
 
-    public void TakeDamage(float damage, GameObject damager)
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void TakeDamageServerRpc(float damage)
     {
         health.Value -= damage;
-        OnDamaged(damager);
+        OnDamaged();
     }
 
     public bool IsDead()
@@ -38,7 +40,8 @@ public class Mob : NetworkBehaviour
         return health.Value <= 0;
     }
 
-    public void MoveVector(Vector2 direction)
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void MoveVectorServerRpc(Vector2 direction)
     {
         transform.Translate(direction);
     }
@@ -73,9 +76,10 @@ public class Mob : NetworkBehaviour
                 if (Random.value <= drop.spawnChance)
                 {
                     GameObject dropSpawned = Instantiate(electronDropPrefab, transform.position, Quaternion.identity);
+                    dropSpawned.GetComponent<NetworkObject>().Spawn();
                     ElectronDrop electronDrop = dropSpawned.GetComponent<ElectronDrop>();
                     electronDrop.spreadDirection = Random.insideUnitCircle.normalized;
-                    electronDrop.electronPrefab = drop.dropPrefab;
+                    electronDrop.electronDropID.Value = drop.dropPrefab.GetComponent<Electron>().electronID;
                 }
             }
 
@@ -116,7 +120,7 @@ public class Mob : NetworkBehaviour
         }
     }
 
-    public virtual void OnDamaged(GameObject hitObject = null)
+    public virtual void OnDamaged()
     {
         // Nothing by default
     }
@@ -165,7 +169,8 @@ public class Mob : NetworkBehaviour
         }
     }
 
-    public void ApplyVelocity(Vector2 appliedVelocity)
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void ApplyVelocityServerRpc(Vector2 appliedVelocity)
     {
         velocity += appliedVelocity;
     }

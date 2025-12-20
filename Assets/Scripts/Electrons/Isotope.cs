@@ -8,6 +8,7 @@ public class Isotope : Electron
     float lastHit = 0;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         CheckCollisions();
@@ -26,7 +27,7 @@ public class Isotope : Electron
         {
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
-                mob.TakeDamage(radiation, gameObject);
+                mob.TakeDamageServerRpc(radiation);
             }
         }
         lastHit = Time.time;

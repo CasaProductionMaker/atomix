@@ -5,6 +5,7 @@ public class MissileElectron : Electron
     public float missileSpeed = 10f;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         if (isDetached) MoveMissile();

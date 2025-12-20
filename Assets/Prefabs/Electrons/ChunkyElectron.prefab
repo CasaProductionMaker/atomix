@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8266656503763194770}
   - component: {fileID: 6891602143385855001}
+  - component: {fileID: -6116556649678155017}
   - component: {fileID: 7157561388494384402}
   - component: {fileID: 6033735169506914601}
-  - component: {fileID: -6116556649678155017}
   - component: {fileID: -3823616649518288759}
   m_Layer: 0
   m_Name: ChunkyElectron
@@ -94,6 +94,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6116556649678155017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073155924463920371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 4278077317
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &7157561388494384402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f16155054dbc437f8c72ab01384d69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NormalElectron
+  ShowTopMostFoldoutHeaderGroup: 1
   electronID: 1
   electronName: Chunky Electron
   description: Why is this one bigger?
@@ -168,31 +194,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.34
---- !u!114 &-6116556649678155017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5073155924463920371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 4278077317
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &-3823616649518288759
 MonoBehaviour:
   m_ObjectHideFlags: 0

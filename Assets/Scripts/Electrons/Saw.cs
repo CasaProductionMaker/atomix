@@ -6,6 +6,7 @@ public class Saw : Electron
     public float speed = 10f;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         StayInBounds();
@@ -60,7 +61,7 @@ public class Saw : Electron
         {
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
-                mob.TakeDamage(damage, gameObject);
+                mob.TakeDamageServerRpc(damage);
                 health -= mob.bodyDamage;
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 if (isDetached)
@@ -71,7 +72,7 @@ public class Saw : Electron
                 float totalDistance = size + (collider as CircleCollider2D).radius;
                 float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
                 transform.position += (Vector3)(-hitAngle * multiplier);
-                mob.MoveVector(hitAngle * 0.02f);
+                mob.MoveVectorServerRpc(hitAngle * 0.02f);
             }
         }
     }

@@ -53,12 +53,12 @@ public class Player : NetworkBehaviour
         {
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
-                mob.TakeDamage(bodyDamage, gameObject);
+                mob.TakeDamageServerRpc(bodyDamage);
                 health -= mob.bodyDamage;
                 healthBar.value = health / getMaxHealth();
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 velocity -= hitAngle * 1.5f;
-                mob.MoveVector(hitAngle * 0.001f);
+                mob.ApplyVelocityServerRpc(hitAngle * 0.1f);
             }
         }
 

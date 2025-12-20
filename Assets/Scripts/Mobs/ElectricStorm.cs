@@ -16,13 +16,13 @@ public class ElectricStorm : Mob
 
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         PlaySpinAnimation();
         if (Time.time - lastTargetResetTime >= targetResetInterval) ChooseRandomTarget();
         MoveTowardsRandomTarget();
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
     }
 

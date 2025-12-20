@@ -30,7 +30,7 @@ public class PoisonEffect : MonoBehaviour
         transform.position = mob.transform.position;
         if (Time.time - lastDamageTime >= 1f)
         {
-            mob.TakeDamage(damagePerSecond, gameObject);
+            mob.TakeDamageServerRpc(damagePerSecond);
             lastDamageTime = Time.time;
         }
     }

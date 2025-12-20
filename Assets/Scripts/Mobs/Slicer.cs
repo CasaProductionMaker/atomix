@@ -4,6 +4,7 @@ public class Slicer : Mob
 {
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -13,7 +14,6 @@ public class Slicer : Mob
         }
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
     }
 

@@ -6,14 +6,15 @@ public class Magnet : Electron
     public float radius = 3;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         CheckCollisions();
-        DoRadiation();
+        DoMagnetism();
         TurnAnimation();
     }
 
-    void DoRadiation()
+    void DoMagnetism()
     {
         if (isDead) return;
         
@@ -25,7 +26,7 @@ public class Magnet : Electron
                 Vector2 pullDirection = transform.position - mob.transform.position;
                 float pullAmount = pull / pullDirection.magnitude;
                 pullDirection = pullDirection.normalized * pullAmount;
-                mob.ApplyVelocity(pullDirection);
+                mob.ApplyVelocityServerRpc(pullDirection);
             }
         }
     }

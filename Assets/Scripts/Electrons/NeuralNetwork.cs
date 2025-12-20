@@ -6,6 +6,7 @@ public class NeuralNetwork : Electron
     GameObject AIInstance;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         StayInBounds();

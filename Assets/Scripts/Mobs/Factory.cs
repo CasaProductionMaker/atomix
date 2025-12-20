@@ -15,10 +15,10 @@ public class Factory : Mob
     }
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         SpawnMobs();
         DieIfDead();
     }

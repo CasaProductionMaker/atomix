@@ -109,7 +109,7 @@ public class Summon : MonoBehaviour
             {
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 velocity -= hitAngle;
-                mob.TakeDamage(bodyDamage, gameObject);
+                mob.TakeDamageServerRpc(bodyDamage);
                 TakeDamage(mob.bodyDamage);
                 OnDamaged();
             }

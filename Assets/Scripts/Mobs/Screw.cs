@@ -4,6 +4,7 @@ public class Screw : Mob
 {
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -13,7 +14,6 @@ public class Screw : Mob
         }
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
     }
 

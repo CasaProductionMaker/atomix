@@ -4,13 +4,13 @@ public class Missile : Mob
 {
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
         LookAtTarget();
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
     }
 

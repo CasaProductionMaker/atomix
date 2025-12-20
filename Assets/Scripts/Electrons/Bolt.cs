@@ -7,6 +7,7 @@ public class Bolt : Electron
     public GameObject lightningEffectPrefab;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         CheckCollisions();
@@ -24,7 +25,7 @@ public class Bolt : Electron
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
                 // Summon lightning effect
-                mob.TakeDamage(lightningDamage, gameObject);
+                mob.TakeDamageServerRpc(lightningDamage);
                 GameObject lightningEffect = Instantiate(lightningEffectPrefab, mob.transform.position, Quaternion.identity);
                 lightningEffect.GetComponent<LightningEffect>().Initialize(transform.position, mob.transform.position);
                 health = 0;

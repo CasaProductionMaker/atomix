@@ -4,6 +4,7 @@ public class LaserScrew : Mob
 {
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -13,7 +14,6 @@ public class LaserScrew : Mob
         }
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
     }
 

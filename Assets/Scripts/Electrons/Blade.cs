@@ -8,6 +8,7 @@ public class Blade : Electron
     
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         CheckCollisions();
@@ -25,7 +26,7 @@ public class Blade : Electron
                 if (!damagedMobs.ContainsKey(mob) || Time.time - damagedMobs[mob] >= interval)
                 {
                     damagedMobs[mob] = Time.time;
-                    mob.TakeDamage(damage, gameObject);
+                    mob.TakeDamageServerRpc(damage);
                 }
             }
         }

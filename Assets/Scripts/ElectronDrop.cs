@@ -1,20 +1,35 @@
+using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
-public class ElectronDrop : MonoBehaviour
+public class ElectronDrop : NetworkBehaviour
 {
-    public GameObject electronPrefab;
+    public NetworkVariable<int> electronDropID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public Vector2 spreadDirection;
     public SpriteRenderer electronImage;
 
     void Start()
     {
         GetComponent<Rigidbody2D>().linearVelocity = spreadDirection * 2f;
-        electronImage.sprite = electronPrefab.GetComponent<SpriteRenderer>().sprite;
+        UpdateImage();
+    }
+
+    public void UpdateImage()
+    {
+        LangObject langObject = GameObject.Find("LangObject").GetComponent<LangObject>();
+        electronImage.sprite = langObject.electronsInGame[electronDropID.Value].GetComponent<SpriteRenderer>().sprite;
     }
 
     void Update()
     {
         StayInBounds();
+        UpdateImage();
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void PickedUpServerRpc()
+    {
+        Destroy(gameObject);
     }
 
     public void StayInBounds()

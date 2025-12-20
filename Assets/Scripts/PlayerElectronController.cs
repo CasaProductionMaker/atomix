@@ -181,7 +181,6 @@ public class PlayerElectronController : NetworkBehaviour
                 float easing = 20f;
                 if (electronReference is HeavyElectron) easing = 10f;
                 electronReference.transform.position = Vector2.Lerp(electronReference.transform.position, targetPosition, easing * Time.deltaTime);
-                Debug.Log(electronReference);
 
                 // Electric storm movement
                 if (electronReference is ChargeGenerator chargeGenerator)
@@ -305,6 +304,7 @@ public class PlayerElectronController : NetworkBehaviour
 
     public bool AddElectronToBuild(int electronID)
     {
+        // Finds the avaiable position to put a new electron in
         int shell = -1;
         int position = -1;
         for (int i = 0; i < maxElectronsPerShell.Length; i++)
@@ -351,7 +351,7 @@ public class PlayerElectronController : NetworkBehaviour
 
         electronsPerShell[shell][position] = new SpawnedElectron(shell, newElectronObject.GetComponent<Electron>(), electronPrefab);
         electronsPerShell[shell][position].electronReference.player = this;
-        UpdatePetalAngles();
+        UpdateElectronAngles();
         UpdateHotbarUI();
     }
 
@@ -359,17 +359,12 @@ public class PlayerElectronController : NetworkBehaviour
     {
         if (!electronsPerShell[shell][position].isEmptySlot) return false;
 
-        GameObject newElectronObject = Instantiate(electronPrefab, transform.position, Quaternion.identity);
-
-        electronsPerShell[shell][position] = new SpawnedElectron(shell, newElectronObject.GetComponent<Electron>(), electronPrefab);
-        electronsPerShell[shell][position].electronReference.player = this;
-        UpdatePetalAngles();
-        UpdateHotbarUI();
+        SpawnElectronOnNetworkServerRpc(electronPrefab.GetComponent<Electron>().electronID, shell, position, NetworkManager.LocalClientId);
 
         return true;
     }
 
-    public void UpdatePetalAngles()
+    public void UpdateElectronAngles()
     {
         for (int i = 0; i < maxElectronsPerShell.Length; i++)
         {
@@ -401,7 +396,6 @@ public class PlayerElectronController : NetworkBehaviour
             List<SpawnedElectron> electrons = electronsPerShell[i];
             foreach (SpawnedElectron electron in electrons)
             {
-                Debug.Log(uiSlots[slotID]);
                 uiSlots[slotID].electronInSlot = electron.isEmptySlot ? null : electron.electronPrefab;
                 uiSlots[slotID].amount = electron.isEmptySlot ? 0 : 1;
                 uiSlots[slotID].UpdateSlotImage();
@@ -433,6 +427,7 @@ public class PlayerElectronController : NetworkBehaviour
             GameObject inventoryElectron = Instantiate(inventoryElectronPrefab, inventoryContainer);
             inventoryElectron.transform.SetParent(inventoryContainer, false);
             UISlot uiSlot = inventoryElectron.GetComponent<UISlot>();
+            uiSlot.SetPEC(this);
             uiSlot.electronInSlot = electronPrefab;
             uiSlot.amount = 1;
             uiSlot.UpdateSlotImage();
@@ -461,18 +456,27 @@ public class PlayerElectronController : NetworkBehaviour
         SpawnedElectron electron = electronsPerShell[shell][position];
         if (electron.isEmptySlot) return;
 
-        Destroy(electron.electronReference.gameObject);
+        DestroyElectronServerRpc(electron.electronReference.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
         electronsPerShell[shell][position] = new SpawnedElectron(true);
-        UpdatePetalAngles();
+        UpdateElectronAngles();
         UpdateHotbarUI();
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void DestroyElectronServerRpc(ulong objectID)
+    {
+        Destroy(NetworkManager.SpawnManager.SpawnedObjects[objectID].gameObject);
+        Debug.Log("REMOVED " + objectID + " Object: " + NetworkManager.SpawnManager.SpawnedObjects[objectID].name);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<ElectronDrop>(out ElectronDrop drop))
+        if (!IsOwner) return;
+        if (collision.gameObject.TryGetComponent(out ElectronDrop drop))
         {
-            PickUpElectron(drop.electronPrefab);
-            Destroy(collision.gameObject);
+            LangObject langObject = GameObject.Find("LangObject").GetComponent<LangObject>();
+            PickUpElectron(langObject.electronsInGame[drop.electronDropID.Value]);
+            drop.PickedUpServerRpc();
         }
     }
 

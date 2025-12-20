@@ -8,9 +8,9 @@ public class SupermassiveBlackHole : Mob
 
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         TickVelocity();
-        UpdateHealthBar();
         DiscSpinAnimation();
         PullPlayers();
         DieIfDead();

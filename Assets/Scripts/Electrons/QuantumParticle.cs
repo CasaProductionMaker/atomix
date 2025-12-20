@@ -6,6 +6,7 @@ public class QuantumParticle : Electron
     public float push = 10f;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         StayInBounds();

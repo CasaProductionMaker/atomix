@@ -9,10 +9,10 @@ public class Stunner : Mob
 
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         ShooterLogic();
         DieIfDead();
     }

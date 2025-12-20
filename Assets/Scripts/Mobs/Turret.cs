@@ -11,10 +11,10 @@ public class Turret : Mob
 
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         SpinTurret();
         LaserDamage();
         DieIfDead();

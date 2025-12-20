@@ -5,6 +5,7 @@ public class Booster : Mob
     public GameObject boosterEffect;
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -12,7 +13,6 @@ public class Booster : Mob
         ShowEffects();
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
     }
 

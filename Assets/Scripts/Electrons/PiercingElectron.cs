@@ -6,6 +6,7 @@ public class PiercingElectron : Electron
     public float damageMultiplier = 10;
     void Update()
     {
+        if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
         CheckCollisions();
@@ -22,13 +23,13 @@ public class PiercingElectron : Electron
             {
                 float actualDamageMultiplier = 1f;
                 if (mob.health.Value / mob.maxHealth >= 0.8f) actualDamageMultiplier = damageMultiplier;
-                mob.TakeDamage(GetDamage() * actualDamageMultiplier, gameObject);
+                mob.TakeDamageServerRpc(GetDamage() * actualDamageMultiplier);
                 health -= mob.bodyDamage;
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 float totalDistance = size + (collider as CircleCollider2D).radius;
                 float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
                 transform.position += (Vector3)(-hitAngle * multiplier);
-                mob.MoveVector(hitAngle * 0.02f);
+                mob.MoveVectorServerRpc(hitAngle * 0.02f);
             }
         }
     }

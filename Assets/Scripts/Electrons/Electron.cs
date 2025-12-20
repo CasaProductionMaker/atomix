@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Netcode;
 
-public class Electron : MonoBehaviour
+public class Electron : NetworkBehaviour
 {
     public int electronID;
     public string electronName;
@@ -65,13 +66,13 @@ public class Electron : MonoBehaviour
         {
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
-                mob.TakeDamage(GetDamage(), gameObject);
+                mob.TakeDamageServerRpc(GetDamage());
                 health -= mob.bodyDamage;
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 float totalDistance = size + (collider as CircleCollider2D).radius;
                 float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
                 transform.position += (Vector3)(-hitAngle * multiplier);
-                mob.MoveVector(hitAngle * 0.02f);
+                mob.MoveVectorServerRpc(hitAngle * 0.02f);
 
                 Neutralizer neutralizer = player.GetActiveNeutralizer();
                 if (neutralizer != null)
@@ -109,6 +110,7 @@ public class Electron : MonoBehaviour
     {
         float returnDamage = damage;
         
+        Debug.Log(gameObject.name);
         // Loop over build for cores
         for (int i = 0; i < player.getMaxElectronsPerShell().Length; i++)
         {

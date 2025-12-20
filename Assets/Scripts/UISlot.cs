@@ -44,7 +44,6 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginD
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        Debug.Log(electronInSlot);
         if (electronInSlot == null) return;
         Electron electronScript = electronInSlot.GetComponent<Electron>();
         statsWindow.updateStats(electronScript);
@@ -53,7 +52,6 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IDragHandler, IBeginD
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-        Debug.Log("EXIT");
         if (electronInSlot == null) return;
         Electron electronScript = electronInSlot.GetComponent<Electron>();
         statsWindow.updateStats(electronScript);

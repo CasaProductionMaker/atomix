@@ -22,17 +22,17 @@ public class StunBullet : Mob
         DieIfOutOfBounds();
     }
 
-    public override void OnDamaged(GameObject other)
+    public override void OnDamaged()
     {
-        if (other.TryGetComponent(out Player player))
-        {
-            StunEffect stunEffect = Instantiate(stunPrefab, player.transform.position, Quaternion.identity).GetComponent<StunEffect>();
-            stunEffect.Initialize(stunDuration, player);
-        }
-        if (other.TryGetComponent(out Summon summon))
-        {
-            StunEffect stunEffect = Instantiate(stunPrefab, player.transform.position, Quaternion.identity).GetComponent<StunEffect>();
-            stunEffect.Initialize(stunDuration, summon);
-        }
+        // if (other.TryGetComponent(out Player player))
+        // {
+        //     StunEffect stunEffect = Instantiate(stunPrefab, player.transform.position, Quaternion.identity).GetComponent<StunEffect>();
+        //     stunEffect.Initialize(stunDuration, player);
+        // }
+        // if (other.TryGetComponent(out Summon summon))
+        // {
+        //     StunEffect stunEffect = Instantiate(stunPrefab, player.transform.position, Quaternion.identity).GetComponent<StunEffect>();
+        //     stunEffect.Initialize(stunDuration, summon);
+        // }
     }
 }

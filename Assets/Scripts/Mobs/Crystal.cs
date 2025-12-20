@@ -8,10 +8,10 @@ public class Crystal : Mob
     float lastHit = 0;
     void Update()
     {
+        UpdateHealthBar();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DoRadiation();
         DieIfDead();
     }
