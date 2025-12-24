@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5407401723474397471}
+  - component: {fileID: -3937402244830735025}
   - component: {fileID: 4781447003404056459}
   - component: {fileID: 6309314974996153685}
-  - component: {fileID: -3937402244830735025}
   - component: {fileID: 4294519485028350466}
   m_Layer: 0
   m_Name: ElectricStorm
@@ -37,6 +37,31 @@ Transform:
   - {fileID: 8768329937493936815}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3937402244830735025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081282699094193367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3036321128
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &4781447003404056459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,12 +74,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262c1d79f08f940adbf4ca60757d2e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ElectricStorm
+  ShowTopMostFoldoutHeaderGroup: 1
   mobName: Electric Storm
   maxHealth: 200
   speed: 0.4
   bodyDamage: 50
   aggroRange: 5
-  health: 0
+  health:
+    m_InternalValue: 1
   target: {fileID: 0}
   velocity: {x: 0, y: 0}
   randomRotation: 1
@@ -102,31 +129,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.83
---- !u!114 &-3937402244830735025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1081282699094193367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3036321128
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &4294519485028350466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +161,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

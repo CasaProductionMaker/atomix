@@ -132,7 +132,8 @@ public class Player : NetworkBehaviour
         healthBar.value = health.Value / getMaxHealth();
     }
 
-    public void TakeDamage(float damage)
+    [Rpc(SendTo.Owner, InvokePermission = RpcInvokePermission.Everyone)]
+    public void TakeDamageOwnerRpc(float damage)
     {
         health.Value -= damage;
         healthBar.value = health.Value / getMaxHealth();

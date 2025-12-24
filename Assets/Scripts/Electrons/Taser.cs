@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class Taser : Electron
 {
@@ -29,7 +30,7 @@ public class Taser : Electron
                 float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
                 transform.position += (Vector3)(-hitAngle * multiplier);
                 mob.MoveVectorServerRpc(hitAngle * 0.02f);
-                Instantiate(stunEffectPrefab, mob.transform.position, Quaternion.identity).GetComponent<StunEffect>().Initialize(duration, mob);
+                SpawnStunEffectServerRpc(mob.transform.position, mob.GetComponent<NetworkObject>().NetworkObjectId, duration);
 
                 Neutralizer neutralizer = player.GetActiveNeutralizer();
                 if (neutralizer != null)
@@ -38,5 +39,13 @@ public class Taser : Electron
                 }
             }
         }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SpawnStunEffectServerRpc(Vector3 position, ulong mobID, float duration)
+    {
+        GameObject spawnedStunEffect = Instantiate(stunEffectPrefab, position, Quaternion.identity);
+        spawnedStunEffect.GetComponent<StunEffect>().Initialize(duration, NetworkManager.SpawnManager.SpawnedObjects[mobID].GetComponent<Mob>());
+        spawnedStunEffect.GetComponent<NetworkObject>().Spawn(true);
     }
 }

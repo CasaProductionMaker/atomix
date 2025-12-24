@@ -10,6 +10,7 @@ public class AI : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -24,7 +25,7 @@ public class AI : Mob
         if (target == null) return;
         Vector3 direction = target.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        GFX.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        GFXRotation.Value = angle;
     }
 
     public override void OnDamaged()
@@ -37,7 +38,7 @@ public class AI : Mob
         {
             if(collider.TryGetComponent(out Player player))
             {
-                player.TakeDamage(explosionDamage);
+                player.TakeDamageOwnerRpc(explosionDamage);
             }
         }
         health.Value = 0;

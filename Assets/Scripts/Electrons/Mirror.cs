@@ -19,7 +19,7 @@ public class Mirror : Electron
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, size);
         foreach (Collider2D collider in hit)
         {
-            if (collider.gameObject.TryGetComponent<Mob>(out Mob mob))
+            if (collider.gameObject.TryGetComponent(out Mob mob))
             {
                 mob.TakeDamageServerRpc(mob.bodyDamage * reflection);
                 health -= mob.bodyDamage;

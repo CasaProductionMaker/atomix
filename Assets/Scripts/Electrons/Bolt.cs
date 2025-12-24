@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class Bolt : Electron
@@ -26,11 +27,23 @@ public class Bolt : Electron
             {
                 // Summon lightning effect
                 mob.TakeDamageServerRpc(lightningDamage);
-                GameObject lightningEffect = Instantiate(lightningEffectPrefab, mob.transform.position, Quaternion.identity);
-                lightningEffect.GetComponent<LightningEffect>().Initialize(transform.position, mob.transform.position);
+                spawnLightningEffectServerRpc(transform.position, mob.transform.position);
                 health = 0;
                 return;
             }
         }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void spawnLightningEffectServerRpc(Vector3 initPos, Vector3 endPos)
+    {
+        spawnLightningEffectClientRpc(initPos, endPos);
+    }
+
+    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Everyone)]
+    public void spawnLightningEffectClientRpc(Vector3 initPos, Vector3 endPos)
+    {
+        GameObject lightningEffect = Instantiate(lightningEffectPrefab, endPos, Quaternion.identity);
+        lightningEffect.GetComponent<LightningEffect>().Initialize(initPos, endPos);
     }
 }

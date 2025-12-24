@@ -8,6 +8,7 @@ public class OrbSphere : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();

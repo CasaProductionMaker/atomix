@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class DeterioratingElectron : Electron
 {
@@ -30,7 +31,7 @@ public class DeterioratingElectron : Electron
                 float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
                 transform.position += (Vector3)(-hitAngle * multiplier);
                 mob.MoveVectorServerRpc(hitAngle * 0.02f);
-                Instantiate(poisonEffectPrefab, mob.transform.position, Quaternion.identity).GetComponent<PoisonEffect>().Initialize(deterioration, duration, mob);
+                SpawnPosionEffectServerRpc(mob.transform.position, mob.GetComponent<NetworkObject>().NetworkObjectId, deterioration, duration);
 
                 Neutralizer neutralizer = player.GetActiveNeutralizer();
                 if (neutralizer != null)
@@ -39,5 +40,13 @@ public class DeterioratingElectron : Electron
                 }
             }
         }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SpawnPosionEffectServerRpc(Vector3 position, ulong mobID, float deterioration, float duration)
+    {
+        GameObject spawnedPoisonEffect = Instantiate(poisonEffectPrefab, position, Quaternion.identity);
+        spawnedPoisonEffect.GetComponent<PoisonEffect>().Initialize(deterioration, duration, NetworkManager.SpawnManager.SpawnedObjects[mobID].GetComponent<Mob>());
+        spawnedPoisonEffect.GetComponent<NetworkObject>().Spawn(true);
     }
 }

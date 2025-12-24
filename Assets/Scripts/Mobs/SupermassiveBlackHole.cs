@@ -9,6 +9,7 @@ public class SupermassiveBlackHole : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         TickVelocity();
         DiscSpinAnimation();

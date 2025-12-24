@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class NeuralNetwork : Electron
 {
@@ -10,18 +11,36 @@ public class NeuralNetwork : Electron
         DieIfDead();
         if (isDead) return;
         StayInBounds();
-        SpawnElectricStorm();
+        SpawnAI();
         CheckCollisions();
         TurnAnimation();
     }
 
-    void SpawnElectricStorm()
+    void SpawnAI()
     {
         if (!hasSpawnedAI() && (Time.time - timeDied) >= reload + secondaryReload)
         {
-            AIInstance = Instantiate(AIPrefab, transform.position, Quaternion.identity);
-            AIInstance.GetComponent<AISummon>().parentElectron = this;
+            SpawnAIServerRpc(NetworkManager.LocalClientId);
         }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SpawnAIServerRpc(ulong clientID)
+    {
+        GameObject spawnedAI = Instantiate(AIPrefab, transform.position, Quaternion.identity);
+        spawnedAI.GetComponent<NetworkObject>().Spawn(true);
+        spawnedAI.GetComponent<NetworkObject>().ChangeOwnership(clientID);
+
+        ReturnWithSpawnedAIClientRpc(spawnedAI.GetComponent<NetworkObject>().NetworkObjectId);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void ReturnWithSpawnedAIClientRpc(ulong networkObjectId)
+    {
+        if (!IsOwner) return;
+        GameObject AIObject = NetworkManager.SpawnManager.SpawnedObjects[networkObjectId].gameObject;
+        AIInstance = AIObject;
+        AIInstance.GetComponent<AISummon>().parentElectron = this;
     }
 
     public bool hasSpawnedAI()
@@ -36,7 +55,7 @@ public class NeuralNetwork : Electron
         {
             timeDied = Time.time;
             isDead = true;
-            Destroy(AIInstance);
+            if (AIInstance != null) AIInstance.GetComponent<AISummon>().DestroySelfServerRpc();
             Debug.Log("???");
         }
         if (isDead)

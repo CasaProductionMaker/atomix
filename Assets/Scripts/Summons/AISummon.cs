@@ -8,13 +8,14 @@ public class AISummon : Summon
 
     void Update()
     {
+        RotateGFX();
+        UpdateHealthBar();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
         LookAtTarget();
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
         DieIfSpawnerDead();
     }
@@ -24,7 +25,7 @@ public class AISummon : Summon
         if (target == null) return;
         Vector3 direction = target.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        GFX.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        GFXRotation.Value = angle;
     }
 
     public override void OnDamaged()
@@ -47,7 +48,7 @@ public class AISummon : Summon
     {
         if (!parentElectron)
         {
-            Destroy(gameObject);
+            DestroySelfServerRpc();
         }
     }
 }

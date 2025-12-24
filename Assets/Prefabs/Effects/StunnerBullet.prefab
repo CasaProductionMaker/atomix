@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 2357432566671043874}
   - component: {fileID: 3976713097225888003}
   - component: {fileID: 8950295562323357598}
+  - component: {fileID: 79238492185195075}
   - component: {fileID: 604433860135620912}
+  - component: {fileID: 4500347667254184741}
   m_Layer: 0
   m_Name: StunnerBullet
   m_TagString: Untagged
@@ -128,6 +130,31 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.2
+--- !u!114 &79238492185195075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184232821548720291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2466280430
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &604433860135620912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,12 +167,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2386bef04d1184b64afe8efcd5a3d3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StunBullet
+  ShowTopMostFoldoutHeaderGroup: 1
   mobName: Stun Bullet
   maxHealth: 10
   speed: 5
   bodyDamage: 0
   aggroRange: 0
-  health: 0
+  health:
+    m_InternalValue: 1
+  GFXRotation:
+    m_InternalValue: 0
   target: {fileID: 0}
   velocity: {x: 0, y: 0}
   randomRotation: 0
@@ -156,3 +187,49 @@ MonoBehaviour:
   stunPrefab: {fileID: 8400112087400108049, guid: 00b8fc8593e594edd8585ec1cc67f7d7, type: 3}
   fixedVelocity: {x: 0, y: 0}
   stunDuration: 0.5
+--- !u!114 &4500347667254184741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184232821548720291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkTransform
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
+  AuthorityMode: 1
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 0
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0

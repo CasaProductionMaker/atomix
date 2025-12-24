@@ -12,6 +12,7 @@ public class Turret : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
@@ -39,7 +40,7 @@ public class Turret : Mob
 
                 if (hitObject.TryGetComponent(out Player player) && Time.time - lastHit > 1f)
                 {
-                    player.TakeDamage(laserDamage);
+                    player.TakeDamageOwnerRpc(laserDamage);
                     lastHit = Time.time;
                 }
                 if (hitObject.TryGetComponent(out Summon summon) && Time.time - lastHit > 1f)

@@ -14,6 +14,7 @@ public class Landmine : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
@@ -54,7 +55,7 @@ public class Landmine : Mob
         {
             if(collider.TryGetComponent(out Player player))
             {
-                player.TakeDamage(explosionDamage);
+                player.TakeDamageOwnerRpc(explosionDamage);
             }
         }
         health.Value = 0;

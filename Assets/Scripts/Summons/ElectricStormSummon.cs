@@ -15,20 +15,21 @@ public class ElectricStormSummon : Summon
 
     void Update()
     {
+        RotateGFX();
+        UpdateHealthBar();
         if (!IsOwner) return;
         PlaySpinAnimation();
         if (Time.time - lastTargetResetTime >= targetResetInterval) ChooseRandomTarget();
         MoveTowardsRandomTarget();
         CheckCollisions();
         TickVelocity();
-        UpdateHealthBar();
         DieIfDead();
         DieIfSpawnerDead();
     }
 
     void PlaySpinAnimation()
     {
-        GFX.Rotate(0, 0, -1000f * Time.deltaTime);
+        GFXRotation.Value -= 1000f * Time.deltaTime;
     }
 
     void ChooseRandomTarget()
@@ -48,7 +49,7 @@ public class ElectricStormSummon : Summon
     {
         if (!parentElectron)
         {
-            Destroy(gameObject);
+            DestroySelfServerRpc();
         }
     }
 }

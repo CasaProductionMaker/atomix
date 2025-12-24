@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class ChargeGenerator : Electron
@@ -19,9 +20,28 @@ public class ChargeGenerator : Electron
     {
         if (!hasSpawnedStorm() && (Time.time - timeDied) >= reload + secondaryReload)
         {
-            electricStormInstance = Instantiate(electricStormPrefab, transform.position, Quaternion.identity); // Start here, make it a serverRpc somehow
-            electricStormInstance.GetComponent<ElectricStormSummon>().parentElectron = this;
+            SpawnStormServerRpc(NetworkManager.LocalClientId);
         }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SpawnStormServerRpc(ulong clientID)
+    {
+        GameObject spawnedStorm = Instantiate(electricStormPrefab, transform.position, Quaternion.identity);
+        spawnedStorm.GetComponent<NetworkObject>().Spawn(true);
+        spawnedStorm.GetComponent<NetworkObject>().ChangeOwnership(clientID);
+
+        ReturnWithSpawnedStormClientRpc(spawnedStorm.GetComponent<NetworkObject>().NetworkObjectId);
+    }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    public void ReturnWithSpawnedStormClientRpc(ulong networkObjectId)
+    {
+        if (!IsOwner) return;
+        GameObject stormObject = NetworkManager.SpawnManager.SpawnedObjects[networkObjectId].gameObject;
+        Debug.Log(stormObject);
+        electricStormInstance = stormObject;
+        electricStormInstance.GetComponent<ElectricStormSummon>().parentElectron = this;
     }
 
     public bool hasSpawnedStorm()
@@ -36,8 +56,7 @@ public class ChargeGenerator : Electron
         {
             timeDied = Time.time;
             isDead = true;
-            Destroy(electricStormInstance);
-            Debug.Log("???");
+            electricStormInstance.GetComponent<ElectricStormSummon>().DestroySelfServerRpc();
         }
         if (isDead)
         {

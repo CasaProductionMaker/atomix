@@ -5,6 +5,7 @@ public class Screw : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -19,6 +20,6 @@ public class Screw : Mob
 
     void PlaySpinAnimation()
     {
-        GFX.Rotate(0, 0, -400f * Time.deltaTime);
+        GFXRotation.Value -= 400f * Time.deltaTime;
     }
 }

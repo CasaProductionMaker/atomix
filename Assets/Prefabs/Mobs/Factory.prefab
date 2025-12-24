@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 799741199800455745}
   - component: {fileID: 6443958760169366814}
-  - component: {fileID: 8645487016119985393}
   - component: {fileID: -798911209385044185}
+  - component: {fileID: 8645487016119985393}
   - component: {fileID: -213148581380683065}
   m_Layer: 0
   m_Name: Factory
@@ -73,39 +73,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.25
---- !u!114 &8645487016119985393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32363167797790412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ca383a2ff2974c66a793030ca1187e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Factory
-  mobName: Factory
-  maxHealth: 500
-  speed: 0
-  bodyDamage: 5
-  aggroRange: 10
-  health: 0
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops:
-  - dropPrefab: {fileID: 7733241564002495102, guid: 15f8669f8b86747f9a34e4e1e616d00a, type: 3}
-    spawnChance: 1
-  - dropPrefab: {fileID: 3352594906386876183, guid: fa78e9a5f7a0a43a490bcc1aa18e66a0, type: 3}
-    spawnChance: 1
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 4764279709689306497}
-  GFX: {fileID: 7260485124710698759}
-  AIPrefab: {fileID: 7700888603548223400, guid: 258c124f48b6d4002b6295e9fb98025c, type: 3}
-  spawnPosition: {fileID: 4372905406910488908}
-  spawnRate: 10
-  spawnAmount: 3
 --- !u!114 &-798911209385044185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +98,41 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &8645487016119985393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32363167797790412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ca383a2ff2974c66a793030ca1187e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Factory
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: Factory
+  maxHealth: 500
+  speed: 0
+  bodyDamage: 5
+  aggroRange: 10
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops:
+  - dropPrefab: {fileID: 7733241564002495102, guid: 15f8669f8b86747f9a34e4e1e616d00a, type: 3}
+    spawnChance: 1
+  - dropPrefab: {fileID: 3352594906386876183, guid: fa78e9a5f7a0a43a490bcc1aa18e66a0, type: 3}
+    spawnChance: 1
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 4764279709689306497}
+  GFX: {fileID: 7260485124710698759}
+  AIPrefab: {fileID: 7700888603548223400, guid: 258c124f48b6d4002b6295e9fb98025c, type: 3}
+  spawnPosition: {fileID: 4372905406910488908}
+  spawnRate: 10
+  spawnAmount: 3
 --- !u!114 &-213148581380683065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +165,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

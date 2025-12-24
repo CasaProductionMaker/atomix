@@ -402,8 +402,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4215722942234031561}
   - component: {fileID: 6231691000749245619}
-  - component: {fileID: 978923156120443509}
   - component: {fileID: 2766935242634033760}
+  - component: {fileID: 978923156120443509}
   - component: {fileID: 5269280295981778676}
   m_Layer: 0
   m_Name: Missile
@@ -465,35 +465,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.55
---- !u!114 &978923156120443509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5476268745012494413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ee6f4ebaf41345da835387034d6ea6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Missile
-  mobName: Missile
-  maxHealth: 150
-  speed: 0.1
-  bodyDamage: 50
-  aggroRange: 30
-  health: 150
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops:
-  - dropPrefab: {fileID: 1963120839214794823, guid: 33960bf3fc6374c18938354b3247e2c2, type: 3}
-    spawnChance: 1
-  - dropPrefab: {fileID: 8250405343111180530, guid: d23fe918d76ee43dea8b68981cd90984, type: 3}
-    spawnChance: 1
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 1439741477702830720}
-  GFX: {fileID: 8462689534802517568}
 --- !u!114 &2766935242634033760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,6 +490,37 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &978923156120443509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5476268745012494413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee6f4ebaf41345da835387034d6ea6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Missile
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: Missile
+  maxHealth: 150
+  speed: 0.1
+  bodyDamage: 50
+  aggroRange: 30
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops:
+  - dropPrefab: {fileID: 1963120839214794823, guid: 33960bf3fc6374c18938354b3247e2c2, type: 3}
+    spawnChance: 1
+  - dropPrefab: {fileID: 8250405343111180530, guid: d23fe918d76ee43dea8b68981cd90984, type: 3}
+    spawnChance: 1
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 1439741477702830720}
+  GFX: {fileID: 8462689534802517568}
 --- !u!114 &5269280295981778676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,7 +553,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

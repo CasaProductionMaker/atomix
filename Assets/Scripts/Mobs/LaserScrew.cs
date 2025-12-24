@@ -5,6 +5,7 @@ public class LaserScrew : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -19,6 +20,6 @@ public class LaserScrew : Mob
 
     void PlaySpinAnimation()
     {
-        GFX.Rotate(0, 0, -500f * Time.deltaTime);
+        GFXRotation.Value -= 500f * Time.deltaTime;
     }
 }

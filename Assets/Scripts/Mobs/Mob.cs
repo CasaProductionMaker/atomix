@@ -11,6 +11,8 @@ public class Mob : NetworkBehaviour
     public float bodyDamage;
     public float aggroRange = 10f;
     public NetworkVariable<float> health = new NetworkVariable<float>(1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> GFXRotation = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
     public Transform target;
     public Vector2 velocity;
     public bool randomRotation = true;
@@ -58,6 +60,11 @@ public class Mob : NetworkBehaviour
                 return;
             }
         }
+    }
+
+    public void RotateGFX()
+    {
+        GFX.rotation = Quaternion.Euler(0f, 0f, GFXRotation.Value);
     }
 
     public void MoveTowardsTarget()

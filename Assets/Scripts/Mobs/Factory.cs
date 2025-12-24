@@ -16,6 +16,7 @@ public class Factory : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();

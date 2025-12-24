@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class Isotope : Electron
 {
@@ -20,7 +21,7 @@ public class Isotope : Electron
     {
         if (isDead) return;
         if (Time.time - lastHit < 1) return;
-        Instantiate(radiationEffect, transform);
+        spawnRadiationEffectServerRpc(GetComponent<NetworkObject>().NetworkObjectId);
         
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D collider in hit)
@@ -31,5 +32,18 @@ public class Isotope : Electron
             }
         }
         lastHit = Time.time;
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void spawnRadiationEffectServerRpc(ulong electronID)
+    {
+        NetworkObject electron = NetworkManager.SpawnManager.SpawnedObjects[electronID];
+
+        GameObject radiationInstance = Instantiate(radiationEffect);
+        NetworkObject radiationNO = radiationInstance.GetComponent<NetworkObject>();
+
+        radiationNO.Spawn(true);
+
+        radiationNO.TrySetParent(electron, true);
     }
 }

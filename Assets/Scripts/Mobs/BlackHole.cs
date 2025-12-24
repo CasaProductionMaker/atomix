@@ -11,10 +11,11 @@ public class BlackHole : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
+        DiscSpinAnimation();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
-        DiscSpinAnimation();
         PullPlayers();
         DieIfDead();
     }

@@ -388,8 +388,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1410275740322247730}
   - component: {fileID: 5432632412301438310}
-  - component: {fileID: 5431634342319899730}
   - component: {fileID: 8017097577611619399}
+  - component: {fileID: 5431634342319899730}
   - component: {fileID: 5203868806036527124}
   m_Layer: 0
   m_Name: AI
@@ -451,36 +451,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.45
---- !u!114 &5431634342319899730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7700888603548223400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ead9c43daefc45ddaffb5a20fe152db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AI
-  mobName: AI
-  maxHealth: 50
-  speed: 0.35
-  bodyDamage: 5
-  aggroRange: 15
-  health: 0
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops:
-  - dropPrefab: {fileID: 8250405343111180530, guid: d23fe918d76ee43dea8b68981cd90984, type: 3}
-    spawnChance: 1
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 6934359610265298515}
-  GFX: {fileID: 7624515424131966330}
-  explosionDamage: 80
-  explosionRadius: 3
-  explosionEffect: {fileID: 7791392378954121488, guid: b796c6958884240919fbf34e771580cb, type: 3}
 --- !u!114 &8017097577611619399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,6 +476,38 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &5431634342319899730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7700888603548223400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ead9c43daefc45ddaffb5a20fe152db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AI
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: AI
+  maxHealth: 50
+  speed: 0.35
+  bodyDamage: 5
+  aggroRange: 15
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops:
+  - dropPrefab: {fileID: 8250405343111180530, guid: d23fe918d76ee43dea8b68981cd90984, type: 3}
+    spawnChance: 1
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 6934359610265298515}
+  GFX: {fileID: 7624515424131966330}
+  explosionDamage: 80
+  explosionRadius: 3
+  explosionEffect: {fileID: 7791392378954121488, guid: b796c6958884240919fbf34e771580cb, type: 3}
 --- !u!114 &5203868806036527124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,7 +540,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

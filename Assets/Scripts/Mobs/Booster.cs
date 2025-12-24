@@ -6,6 +6,7 @@ public class Booster : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -21,7 +22,7 @@ public class Booster : Mob
         if (target == null) return;
         Vector3 direction = target.position - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        GFX.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        GFXRotation.Value = angle;
     }
 
     void ShowEffects()

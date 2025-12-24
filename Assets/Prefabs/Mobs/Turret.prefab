@@ -995,8 +995,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1879379568639192988}
   - component: {fileID: 696189620963897615}
-  - component: {fileID: 3520178302712338251}
   - component: {fileID: -3349966872454328409}
+  - component: {fileID: 3520178302712338251}
   - component: {fileID: 5865211599699996669}
   m_Layer: 0
   m_Name: Turret
@@ -1058,43 +1058,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.3763623
---- !u!114 &3520178302712338251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6674027034401129635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c35f7f1e9f6e94543a65e68159638556, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Turret
-  mobName: Turret
-  maxHealth: 100
-  speed: 0
-  bodyDamage: 5
-  aggroRange: 10
-  health: 0
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops:
-  - dropPrefab: {fileID: 2108893204568623078, guid: 62fe2f0031d8a4766b02bd220c10ea3b, type: 3}
-    spawnChance: 1
-  - dropPrefab: {fileID: 2408996069673623448, guid: 764c936fd59054cd8a206c33cd0068f9, type: 3}
-    spawnChance: 1
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 7207621422437169220}
-  GFX: {fileID: 6538737119059268106}
-  turretTop: {fileID: 789865182547656185}
-  laserShooters:
-  - {fileID: 979008311201896009}
-  - {fileID: 580855383075836131}
-  - {fileID: 2333676303045139831}
-  - {fileID: 8012169353450095268}
-  laserDamage: 15
-  laserDistance: 5
 --- !u!114 &-3349966872454328409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1120,6 +1083,45 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &3520178302712338251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6674027034401129635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c35f7f1e9f6e94543a65e68159638556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turret
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: Turret
+  maxHealth: 100
+  speed: 0
+  bodyDamage: 5
+  aggroRange: 10
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops:
+  - dropPrefab: {fileID: 2108893204568623078, guid: 62fe2f0031d8a4766b02bd220c10ea3b, type: 3}
+    spawnChance: 1
+  - dropPrefab: {fileID: 2408996069673623448, guid: 764c936fd59054cd8a206c33cd0068f9, type: 3}
+    spawnChance: 1
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 7207621422437169220}
+  GFX: {fileID: 6538737119059268106}
+  turretTop: {fileID: 789865182547656185}
+  laserShooters:
+  - {fileID: 979008311201896009}
+  - {fileID: 580855383075836131}
+  - {fileID: 2333676303045139831}
+  - {fileID: 8012169353450095268}
+  laserDamage: 15
+  laserDistance: 5
 --- !u!114 &5865211599699996669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1152,7 +1154,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

@@ -9,6 +9,7 @@ public class Crystal : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
@@ -26,7 +27,7 @@ public class Crystal : Mob
         {
             if (collider.gameObject.TryGetComponent(out Player player))
             {
-                player.TakeDamage(radiation);
+                player.TakeDamageOwnerRpc(radiation);
             }
         }
         lastHit = Time.time;

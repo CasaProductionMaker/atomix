@@ -1,18 +1,24 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
-public class StunEffect : MonoBehaviour
+public class StunEffect : NetworkBehaviour
 {
-    public float duration;
+    public NetworkVariable<float> duration = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public Mob mob;
     public Player player;
     public Summon summon;
     ParticleSystem ps;
     float startTime;
+    bool startedPlaying;
+    void Start()
+    {
+        startedPlaying = false;
+    }
     public void Initialize(float duration, Mob targetMob)
     {
         transform.position = targetMob.transform.position;
-        this.duration = duration;
+        this.duration.Value = duration;
         mob = targetMob;
         ps = GetComponent<ParticleSystem>();
         var main = ps.main;
@@ -24,7 +30,7 @@ public class StunEffect : MonoBehaviour
     public void Initialize(float duration, Player targetPlayer)
     {
         transform.position = targetPlayer.transform.position;
-        this.duration = duration;
+        this.duration.Value = duration;
         player = targetPlayer;
         ps = GetComponent<ParticleSystem>();
         var main = ps.main;
@@ -36,7 +42,7 @@ public class StunEffect : MonoBehaviour
     public void Initialize(float duration, Summon targetSummon)
     {
         transform.position = targetSummon.transform.position;
-        this.duration = duration;
+        this.duration.Value = duration;
         summon = targetSummon;
         ps = GetComponent<ParticleSystem>();
         var main = ps.main;
@@ -48,17 +54,28 @@ public class StunEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!startedPlaying && !IsOwner)
+        {
+            startedPlaying = true;
+            ps = GetComponent<ParticleSystem>();
+            var main = ps.main;
+            main.duration = duration.Value;
+            ps.Play();
+        }
+
+        if (!IsOwner) return;
+
         if (mob == null && player == null && summon == null)
         {
             Destroy(gameObject);
             return;
         } else {
             if (mob != null) {
-                if (Time.time - startTime <= duration) mob.transform.position = transform.position;
+                if (Time.time - startTime <= duration.Value) mob.transform.position = transform.position;
             } else if (player != null){
-                if (Time.time - startTime <= duration) player.transform.position = transform.position;
+                if (Time.time - startTime <= duration.Value) player.transform.position = transform.position;
             } else {
-                if (Time.time - startTime <= duration) summon.transform.position = transform.position;
+                if (Time.time - startTime <= duration.Value) summon.transform.position = transform.position;
             }
         }
     }

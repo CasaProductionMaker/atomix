@@ -5,6 +5,7 @@ public class Slicer : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         DetectTarget();
         MoveTowardsTarget();
@@ -19,6 +20,6 @@ public class Slicer : Mob
 
     void PlaySpinAnimation()
     {
-        GFX.Rotate(0, 0, -750f * Time.deltaTime);
+        GFXRotation.Value -= 750 * Time.deltaTime;
     }
 }

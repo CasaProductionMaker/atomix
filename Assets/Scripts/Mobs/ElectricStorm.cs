@@ -17,6 +17,7 @@ public class ElectricStorm : Mob
     void Update()
     {
         UpdateHealthBar();
+        RotateGFX();
         if (!IsOwner) return;
         PlaySpinAnimation();
         if (Time.time - lastTargetResetTime >= targetResetInterval) ChooseRandomTarget();
@@ -28,7 +29,7 @@ public class ElectricStorm : Mob
 
     void PlaySpinAnimation()
     {
-        GFX.Rotate(0, 0, -1000f * Time.deltaTime);
+        GFXRotation.Value -= 1000f * Time.deltaTime;
     }
 
     void ChooseRandomTarget()

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class LightningEffect : MonoBehaviour
@@ -7,13 +9,14 @@ public class LightningEffect : MonoBehaviour
 
     public void Initialize(Vector2 start, Vector2 end, int quality = 5)
     {
+        // Only runs on server
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = quality;
         for (int i = 0; i < quality; i++)
         {
             float t = (float)i / (quality - 1);
             Vector2 position = Vector2.Lerp(start, end, t);
-            if (i > 0 && i < quality - 1)position += Random.insideUnitCircle * 0.6f;
+            if (i > 0 && i < quality - 1) position += Random.insideUnitCircle * 0.6f;
             lineRenderer.SetPosition(i, position);
         }
         Destroy(gameObject, duration);

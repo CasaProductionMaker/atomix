@@ -313,8 +313,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2806401238824827363}
   - component: {fileID: 6310282838761048486}
-  - component: {fileID: 9106483996090350843}
   - component: {fileID: -281649908390136348}
+  - component: {fileID: 9106483996090350843}
   - component: {fileID: -8555525984398876979}
   m_Layer: 0
   m_Name: OrbSphere
@@ -377,36 +377,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.28
---- !u!114 &9106483996090350843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4414779791764705928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1165bb4f56c0943a2a4aa2dfa8b00f72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OrbSphere
-  mobName: Orb Sphere
-  maxHealth: 500
-  speed: 0
-  bodyDamage: 5
-  aggroRange: 0
-  health: 0
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops:
-  - dropPrefab: {fileID: 5884483521520084290, guid: eb67593d31b684dfbbe979daf259525c, type: 3}
-    spawnChance: 1
-  - dropPrefab: {fileID: 1994086007596839035, guid: 3e437687ee8af4dfd8ab58019d3bf585, type: 3}
-    spawnChance: 1
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 1821562475346748504}
-  GFX: {fileID: 3597845355609780416}
-  heal: 10
 --- !u!114 &-281649908390136348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -432,6 +402,38 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &9106483996090350843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414779791764705928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1165bb4f56c0943a2a4aa2dfa8b00f72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrbSphere
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: Orb Sphere
+  maxHealth: 500
+  speed: 0
+  bodyDamage: 5
+  aggroRange: 0
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops:
+  - dropPrefab: {fileID: 5884483521520084290, guid: eb67593d31b684dfbbe979daf259525c, type: 3}
+    spawnChance: 1
+  - dropPrefab: {fileID: 1994086007596839035, guid: 3e437687ee8af4dfd8ab58019d3bf585, type: 3}
+    spawnChance: 1
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 1821562475346748504}
+  GFX: {fileID: 3597845355609780416}
+  heal: 10
 --- !u!114 &-8555525984398876979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +466,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

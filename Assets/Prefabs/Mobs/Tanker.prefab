@@ -201,8 +201,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4964923119447365852}
   - component: {fileID: 1644494132696224392}
-  - component: {fileID: 219445499767184938}
   - component: {fileID: -205121805610189046}
+  - component: {fileID: 219445499767184938}
   - component: {fileID: -3042573206384237070}
   m_Layer: 0
   m_Name: Tanker
@@ -264,35 +264,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.35
---- !u!114 &219445499767184938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1336963421873578677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c2eff5019d584f609abd702a3558fb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tanker
-  mobName: Tanker
-  maxHealth: 1000
-  speed: 0
-  bodyDamage: 3
-  aggroRange: 10
-  health: 1000
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops:
-  - dropPrefab: {fileID: 5816483377582574359, guid: f6341227889e2458eb6932cbbd37ca6f, type: 3}
-    spawnChance: 1
-  - dropPrefab: {fileID: 1174296092459670284, guid: 506918affe26f43d7a2d476be5526c5b, type: 3}
-    spawnChance: 1
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 7926696430540562923}
-  GFX: {fileID: 3368466633619964784}
 --- !u!114 &-205121805610189046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +289,37 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &219445499767184938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336963421873578677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2eff5019d584f609abd702a3558fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tanker
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: Tanker
+  maxHealth: 1000
+  speed: 0
+  bodyDamage: 3
+  aggroRange: 10
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops:
+  - dropPrefab: {fileID: 5816483377582574359, guid: f6341227889e2458eb6932cbbd37ca6f, type: 3}
+    spawnChance: 1
+  - dropPrefab: {fileID: 1174296092459670284, guid: 506918affe26f43d7a2d476be5526c5b, type: 3}
+    spawnChance: 1
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 7926696430540562923}
+  GFX: {fileID: 3368466633619964784}
 --- !u!114 &-3042573206384237070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,7 +352,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

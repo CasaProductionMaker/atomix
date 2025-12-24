@@ -477,8 +477,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5680154482465010378}
   - component: {fileID: 5196020910260284451}
-  - component: {fileID: 935826422898716280}
   - component: {fileID: 246214934851660539}
+  - component: {fileID: 935826422898716280}
   - component: {fileID: 1574361659836788425}
   m_Layer: 0
   m_Name: LaserScrew
@@ -540,33 +540,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.55
---- !u!114 &935826422898716280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7276192106459434102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a75a0b370e207409d8e9d9fb71c3e91e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LaserScrew
-  mobName: Laser Screw
-  maxHealth: 120
-  speed: 0.3
-  bodyDamage: 20
-  aggroRange: 10
-  health: 120
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops:
-  - dropPrefab: {fileID: 6091591559969958671, guid: 20fe88b04176141b9ac3289a74e29487, type: 3}
-    spawnChance: 1
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 2650539239426413092}
-  GFX: {fileID: 3507269128242457265}
 --- !u!114 &246214934851660539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,6 +565,35 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &935826422898716280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7276192106459434102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a75a0b370e207409d8e9d9fb71c3e91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LaserScrew
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: Laser Screw
+  maxHealth: 120
+  speed: 0.3
+  bodyDamage: 20
+  aggroRange: 10
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops:
+  - dropPrefab: {fileID: 6091591559969958671, guid: 20fe88b04176141b9ac3289a74e29487, type: 3}
+    spawnChance: 1
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 2650539239426413092}
+  GFX: {fileID: 3507269128242457265}
 --- !u!114 &1574361659836788425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,7 +626,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

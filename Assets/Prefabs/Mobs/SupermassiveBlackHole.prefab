@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7416473034725627769}
   - component: {fileID: 3174169747652026568}
-  - component: {fileID: 8163623656260556710}
   - component: {fileID: 5684043465358405006}
+  - component: {fileID: 8163623656260556710}
   - component: {fileID: -7742764080827276087}
   m_Layer: 0
   m_Name: SupermassiveBlackHole
@@ -73,34 +73,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.26
---- !u!114 &8163623656260556710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098415798664579417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87eae263ff1f04eafa679ccd7a2a6503, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SupermassiveBlackHole
-  mobName: Supermassive Black Hole
-  maxHealth: 1000
-  speed: 0
-  bodyDamage: 100
-  aggroRange: 10
-  health: 0
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops: []
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 8330795502471387165}
-  GFX: {fileID: 2481934886428582812}
-  radius: 5
-  pull: 0.8
-  disc: {fileID: 949156778662038691}
 --- !u!114 &5684043465358405006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +98,36 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &8163623656260556710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098415798664579417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87eae263ff1f04eafa679ccd7a2a6503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SupermassiveBlackHole
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: Supermassive Black Hole
+  maxHealth: 1000
+  speed: 0
+  bodyDamage: 100
+  aggroRange: 10
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops: []
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 8330795502471387165}
+  GFX: {fileID: 2481934886428582812}
+  radius: 5
+  pull: 0.8
+  disc: {fileID: 949156778662038691}
 --- !u!114 &-7742764080827276087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +160,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0

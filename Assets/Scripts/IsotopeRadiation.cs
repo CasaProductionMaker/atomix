@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class IsotopeRadiation : MonoBehaviour
+public class IsotopeRadiation : NetworkBehaviour
 {
     public float size = 6f;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -9,8 +10,11 @@ public class IsotopeRadiation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localScale += Vector3.one * 3f * Time.deltaTime;
         spriteRenderer.color = new Color(radiationColor.r, radiationColor.g, radiationColor.b, 0.5f - (transform.localScale.x / (2 * size)));
+        if (!IsOwner) return;
+
+        transform.localScale += Vector3.one * 3f * Time.deltaTime;
+        transform.localPosition = Vector3.zero;
         if (transform.localScale.x >= size) Destroy(gameObject);
     }
 }

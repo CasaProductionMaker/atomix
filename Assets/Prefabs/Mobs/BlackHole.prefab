@@ -210,8 +210,8 @@ GameObject:
   m_Component:
   - component: {fileID: 835412378922584889}
   - component: {fileID: 7041301121270706822}
-  - component: {fileID: 2239893743793438808}
   - component: {fileID: 4632574822394292499}
+  - component: {fileID: 2239893743793438808}
   - component: {fileID: -8532232708242498982}
   m_Layer: 0
   m_Name: BlackHole
@@ -273,38 +273,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.74
---- !u!114 &2239893743793438808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2239151879321986413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cfd660dcb83b4742a759ed6793f719f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BlackHole
-  mobName: Black Hole
-  maxHealth: 500
-  speed: 0
-  bodyDamage: 70
-  aggroRange: 10
-  health: 0
-  target: {fileID: 0}
-  velocity: {x: 0, y: 0}
-  randomRotation: 1
-  drops:
-  - dropPrefab: {fileID: 2108893204568623078, guid: 62fe2f0031d8a4766b02bd220c10ea3b, type: 3}
-    spawnChance: 1
-  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
-  healthBar: {fileID: 3466748455492438750}
-  GFX: {fileID: 7473923836370717173}
-  radius: 5
-  pull: 0.5
-  disc: {fileID: 7623237920276873480}
-  supermassiveBlackHole: {fileID: 1098415798664579417, guid: afe9c2804d28f43de8ad9342338ea8ff, type: 3}
-  mergeEffect: {fileID: 6169791941817853118, guid: 07b5bf8c0f2b9475b8dbb4011d085b19, type: 3}
 --- !u!114 &4632574822394292499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +298,40 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &2239893743793438808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239151879321986413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cfd660dcb83b4742a759ed6793f719f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlackHole
+  ShowTopMostFoldoutHeaderGroup: 1
+  mobName: Black Hole
+  maxHealth: 500
+  speed: 0
+  bodyDamage: 70
+  aggroRange: 10
+  health:
+    m_InternalValue: 1
+  target: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  randomRotation: 1
+  drops:
+  - dropPrefab: {fileID: 2108893204568623078, guid: 62fe2f0031d8a4766b02bd220c10ea3b, type: 3}
+    spawnChance: 1
+  electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
+  healthBar: {fileID: 3466748455492438750}
+  GFX: {fileID: 7473923836370717173}
+  radius: 5
+  pull: 0.5
+  disc: {fileID: 7623237920276873480}
+  supermassiveBlackHole: {fileID: 1098415798664579417, guid: afe9c2804d28f43de8ad9342338ea8ff, type: 3}
+  mergeEffect: {fileID: 6169791941817853118, guid: 07b5bf8c0f2b9475b8dbb4011d085b19, type: 3}
 --- !u!114 &-8532232708242498982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +364,7 @@ MonoBehaviour:
   SyncPositionZ: 0
   SyncRotAngleX: 0
   SyncRotAngleY: 0
-  SyncRotAngleZ: 1
+  SyncRotAngleZ: 0
   SyncScaleX: 0
   SyncScaleY: 0
   SyncScaleZ: 0
