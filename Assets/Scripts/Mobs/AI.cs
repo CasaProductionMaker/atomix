@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using Unity.Netcode;
 using UnityEngine;
 
 public class AI : Mob
@@ -30,8 +30,7 @@ public class AI : Mob
 
     public override void OnDamaged()
     {
-        GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        explosion.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);
+        spawnExplosionServerRpc(explosionRadius);
 
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach(Collider2D collider in hit)
@@ -42,5 +41,13 @@ public class AI : Mob
             }
         }
         health.Value = 0;
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void spawnExplosionServerRpc(float explosionRadius)
+    {
+        GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        explosion.GetComponent<NetworkObject>().Spawn(true);
+        explosion.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);
     }
 }

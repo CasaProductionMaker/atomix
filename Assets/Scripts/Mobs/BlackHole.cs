@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class BlackHole : Mob
 {
@@ -35,7 +36,7 @@ public class BlackHole : Mob
                 Vector2 pullDirection = transform.position - player.transform.position;
                 float pullAmount = pull / pullDirection.magnitude;
                 pullDirection = pullDirection.normalized * pullAmount;
-                player.ApplyVelocity(pullDirection);
+                player.ApplyVelocityOwnerRpc(pullDirection);
             }
 
             if (collider.gameObject.TryGetComponent(out Electron electron))
@@ -65,8 +66,10 @@ public class BlackHole : Mob
             if (collider.gameObject.TryGetComponent(out BlackHole hole) && hole != this)
             {
                 Vector3 inBetweenPosition = (transform.position + hole.transform.position) / 2;
-                Instantiate(supermassiveBlackHole, inBetweenPosition, Quaternion.identity);
-                Instantiate(mergeEffect, inBetweenPosition, Quaternion.identity);
+                GameObject holeSpawn = Instantiate(supermassiveBlackHole, inBetweenPosition, Quaternion.identity);
+                GameObject effectSpawn = Instantiate(mergeEffect, inBetweenPosition, Quaternion.identity);
+                holeSpawn.GetComponent<NetworkObject>().Spawn(true);
+                effectSpawn.GetComponent<NetworkObject>().Spawn(true);
 
                 FindFirstObjectByType<MobSpawner>().mobsLeftInWave--;
 

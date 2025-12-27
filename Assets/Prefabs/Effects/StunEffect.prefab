@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2967589178189514358}
   - component: {fileID: 1779521220266694720}
   - component: {fileID: 4810177021680051356}
-  - component: {fileID: 166358468275836980}
   - component: {fileID: -3430468165556919111}
+  - component: {fileID: 166358468275836980}
   - component: {fileID: 216108093168477655}
   m_Layer: 0
   m_Name: StunEffect
@@ -4839,22 +4839,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &166358468275836980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8400112087400108049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4d7b3e7da06b4b3e83a6a0f532abee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StunEffect
-  duration: 0
-  mob: {fileID: 0}
-  player: {fileID: 0}
-  summon: {fileID: 0}
 --- !u!114 &-3430468165556919111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4880,6 +4864,24 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &166358468275836980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8400112087400108049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d7b3e7da06b4b3e83a6a0f532abee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StunEffect
+  ShowTopMostFoldoutHeaderGroup: 1
+  duration:
+    m_InternalValue: 0
+  mob: {fileID: 0}
+  player: {fileID: 0}
+  summon: {fileID: 0}
 --- !u!114 &216108093168477655
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23152,11 +23152,11 @@ MonoBehaviour:
   playerTransforms: []
   spawnableMobs:
   - mobPrefab: {fileID: 8925941467523404748, guid: 1001c9be152f6420897fbe113b4fa564, type: 3}
-    firstWave: 1
+    firstWave: 2
   - mobPrefab: {fileID: 1836343368575726793, guid: 55170d05e182841c3a3c29a4c8e6422b, type: 3}
     firstWave: 3
   - mobPrefab: {fileID: 1227930975703759681, guid: bc0e8901146d24c3caba8d88d55cedd7, type: 3}
-    firstWave: 1
+    firstWave: 5
   - mobPrefab: {fileID: 7276192106459434102, guid: 32ec179f09a2442ec8e26aa7b28325db, type: 3}
     firstWave: 7
   - mobPrefab: {fileID: 1336963421873578677, guid: 947801dab421843f0abd0a4d12ebbe42, type: 3}
@@ -23187,6 +23187,8 @@ MonoBehaviour:
     firstWave: 25
   - mobPrefab: {fileID: 4502281242963712771, guid: 43730f2c452c5438486187dd86084479, type: 3}
     firstWave: 20
+  - mobPrefab: {fileID: 4502281242963712771, guid: 43730f2c452c5438486187dd86084479, type: 3}
+    firstWave: 1
   waveNumber: 1
   mobsSpawnedInWave: 0
   mobsLeftInWave: 0

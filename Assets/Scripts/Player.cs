@@ -117,7 +117,8 @@ public class Player : NetworkBehaviour
         return velocity;
     }
 
-    public void ApplyVelocity(Vector2 appliedVelocity)
+    [Rpc(SendTo.Owner, InvokePermission = RpcInvokePermission.Everyone)]
+    public void ApplyVelocityOwnerRpc(Vector2 appliedVelocity)
     {
         velocity += appliedVelocity;
     }

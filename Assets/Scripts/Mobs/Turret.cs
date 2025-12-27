@@ -1,10 +1,12 @@
 using NUnit.Framework;
+using Unity.Netcode;
 using UnityEngine;
 
 public class Turret : Mob
 {
     public Transform turretTop;
     public LineRenderer[] laserShooters;
+    public NetworkVariable<float> turretTopRotation = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public float laserDamage = 15;
     public float laserDistance = 5f;
     float lastHit;
@@ -23,7 +25,27 @@ public class Turret : Mob
 
     void SpinTurret()
     {
-        turretTop.Rotate(0, 0, -70f * Time.deltaTime);
+        turretTopRotation.Value -= 70f * Time.deltaTime;
+    }
+
+    new void RotateGFX()
+    {
+        base.RotateGFX();
+        turretTop.rotation = Quaternion.Euler(0, 0, turretTopRotation.Value);
+        foreach(LineRenderer line in laserShooters)
+        {
+            Transform laserPoint = line.transform;
+            Vector3 hitPosition = laserPoint.position + laserPoint.up * laserDistance;
+
+            RaycastHit2D hit = Physics2D.Raycast(laserPoint.position, laserPoint.up, laserDistance);
+            if(hit)
+            {
+                hitPosition = hit.point;
+            }
+
+            line.SetPosition(0, laserPoint.position);
+            line.SetPosition(1, hitPosition);
+        }
     }
 
     void LaserDamage()
@@ -31,7 +53,6 @@ public class Turret : Mob
         foreach(LineRenderer line in laserShooters)
         {
             Transform laserPoint = line.transform;
-            Vector3 hitPosition = laserPoint.position + laserPoint.up * laserDistance;
 
             RaycastHit2D hit = Physics2D.Raycast(laserPoint.position, laserPoint.up, laserDistance);
             if(hit)
@@ -48,11 +69,7 @@ public class Turret : Mob
                     summon.TakeDamage(laserDamage);
                     lastHit = Time.time;
                 }
-                hitPosition = hit.point;
             }
-
-            line.SetPosition(0, laserPoint.position);
-            line.SetPosition(1, hitPosition);
         }
     }
 }

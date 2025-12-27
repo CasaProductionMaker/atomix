@@ -1,17 +1,20 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class Booster : Mob
 {
     public GameObject boosterEffect;
+    public NetworkVariable<bool> isFireOn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     void Update()
     {
         UpdateHealthBar();
         RotateGFX();
+        ShowEffects();
         if (!IsOwner) return;
+        isFireOn.Value = target != null;
         DetectTarget();
         MoveTowardsTarget();
         LookAtTarget();
-        ShowEffects();
         CheckCollisions();
         TickVelocity();
         DieIfDead();
@@ -27,6 +30,6 @@ public class Booster : Mob
 
     void ShowEffects()
     {
-        boosterEffect.SetActive(target != null);
+        boosterEffect.SetActive(isFireOn.Value);
     }
 }

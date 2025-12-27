@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5668307446990952451}
   - component: {fileID: 7305990036882665818}
-  - component: {fileID: 5780961349109255027}
   - component: {fileID: -3230901124357721497}
+  - component: {fileID: 5780961349109255027}
   - component: {fileID: -8288743786588779808}
   m_Layer: 0
   m_Name: CrystalRadiation
@@ -93,21 +93,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5780961349109255027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3229292977299444952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87557661f09b14030b13c9946a6aa385, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::IsotopeRadiation
-  size: 12
-  spriteRenderer: {fileID: 7305990036882665818}
-  radiationColor: {r: 0.50810957, g: 0, b: 0.77254903, a: 0.5}
 --- !u!114 &-3230901124357721497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +118,22 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &5780961349109255027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3229292977299444952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87557661f09b14030b13c9946a6aa385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IsotopeRadiation
+  ShowTopMostFoldoutHeaderGroup: 1
+  size: 12
+  spriteRenderer: {fileID: 7305990036882665818}
+  radiationColor: {r: 0.50810957, g: 0, b: 0.77254903, a: 0.5}
 --- !u!114 &-8288743786588779808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,5 +178,5 @@ MonoBehaviour:
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
   SwitchTransformSpaceWhenParented: 0
-  Interpolate: 1
+  Interpolate: 0
   SlerpPosition: 0

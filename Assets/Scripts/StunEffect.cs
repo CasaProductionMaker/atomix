@@ -54,6 +54,7 @@ public class StunEffect : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(startedPlaying);
         if (!startedPlaying && !IsOwner)
         {
             startedPlaying = true;

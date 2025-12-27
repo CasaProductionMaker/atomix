@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Unity.Netcode;
 
 public class Landmine : Mob
 {
@@ -10,11 +11,13 @@ public class Landmine : Mob
     public TextMeshProUGUI timerText;
     float timeHit = 0;
     bool wasHit = false;
+    public NetworkVariable<int> timeLeftText = new NetworkVariable<int>(3, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     void Update()
     {
         UpdateHealthBar();
         RotateGFX();
+        timerText.text =  "0:" + timeLeftText.Value.ToString("00");;
         if (!IsOwner) return;
         CheckCollisions();
         TickVelocity();
@@ -40,7 +43,7 @@ public class Landmine : Mob
         float timeLeft = explosionTimer - (Time.time - timeHit);
         if (timeLeft < 0) timeLeft = 0;
         int seconds = Mathf.CeilToInt(timeLeft);
-        timerText.text = "0:" + seconds.ToString("00");
+        timeLeftText.Value = seconds;
     }
 
     void ExplodeIfNeeded()
@@ -49,6 +52,7 @@ public class Landmine : Mob
         if (Time.time - timeHit < explosionTimer) return;
         GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
         explosion.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);
+        explosion.GetComponent<NetworkObject>().Spawn(true);
 
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach(Collider2D collider in hit)

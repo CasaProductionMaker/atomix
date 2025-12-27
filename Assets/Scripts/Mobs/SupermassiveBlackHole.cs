@@ -32,7 +32,7 @@ public class SupermassiveBlackHole : Mob
                 Vector2 pullDirection = transform.position - player.transform.position;
                 float pullAmount = pull / pullDirection.magnitude;
                 pullDirection = pullDirection.normalized * pullAmount;
-                player.ApplyVelocity(pullDirection);
+                player.ApplyVelocityOwnerRpc(pullDirection);
             }
 
             if (collider.gameObject.TryGetComponent(out Electron electron))

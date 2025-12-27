@@ -12,7 +12,7 @@ public class MobSpawner : NetworkBehaviour
     public SpawnableMob[] spawnableMobs;
     private float lastSpawnTime = 0f;
 
-    public int waveNumber = 1;
+    public NetworkVariable<int> waveNumber = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public int mobsSpawnedInWave = 0;
     public int mobsLeftInWave = 0;
     public bool isSpawningMobs = false;
@@ -39,24 +39,24 @@ public class MobSpawner : NetworkBehaviour
     {
         isSpawningMobs = true;
         lastSpawnTime = Time.time;
-        mobsLeftInWave = waveNumber * 2;
+        mobsLeftInWave = waveNumber.Value * 2;
     }
 
     // Update is called once per frame
     void Update()
     {
+        waveText.text = "Wave " + waveNumber.Value;
         if (!isSpawningMobs) { return; }
         UpdatePlayerTransforms();
-        if (mobsLeftInWave <= 1 && mobsSpawnedInWave >= waveNumber * 2)
+        if (mobsLeftInWave <= 1 && mobsSpawnedInWave >= waveNumber.Value * 2)
         {
             Debug.Log("Next wave!");
-            waveNumber++;
+            waveNumber.Value++;
             mobsSpawnedInWave = 0;
-            mobsLeftInWave += waveNumber * 2;
-            waveText.text = "Wave " + waveNumber;
+            mobsLeftInWave += waveNumber.Value * 2;
         }
 
-        if (Time.time - lastSpawnTime >= GetSpawnInterval() && mobsSpawnedInWave < waveNumber * 2)
+        if (Time.time - lastSpawnTime >= GetSpawnInterval() && mobsSpawnedInWave < waveNumber.Value * 2)
         {
             SpawnMob();
             mobsSpawnedInWave++;
@@ -103,7 +103,7 @@ public class MobSpawner : NetworkBehaviour
 
         foreach (SpawnableMob mob in spawnableMobs)
         {
-            if (mob.firstWave <= waveNumber)
+            if (mob.firstWave <= waveNumber.Value)
             {
                 waveSpawnableMobs.Add(mob);
             }
@@ -118,7 +118,7 @@ public class MobSpawner : NetworkBehaviour
 
     float GetSpawnInterval()
     {
-        return Mathf.Max(0.5f, 2f - (waveNumber * 0.1f));
+        return Mathf.Max(0.5f, 2f - (waveNumber.Value * 0.1f));
     }
 }
 

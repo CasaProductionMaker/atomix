@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class StunBullet : Mob
@@ -9,7 +10,6 @@ public class StunBullet : Mob
     void Update()
     {
         velocity = fixedVelocity * speed;
-        CheckCollisions();
         TickVelocity();
         DieIfDeadWithoutDecreasingCounter();
     }
@@ -24,15 +24,21 @@ public class StunBullet : Mob
 
     public override void OnDamaged()
     {
-        // if (other.TryGetComponent(out Player player))
-        // {
-        //     StunEffect stunEffect = Instantiate(stunPrefab, player.transform.position, Quaternion.identity).GetComponent<StunEffect>();
-        //     stunEffect.Initialize(stunDuration, player);
-        // }
-        // if (other.TryGetComponent(out Summon summon))
-        // {
-        //     StunEffect stunEffect = Instantiate(stunPrefab, player.transform.position, Quaternion.identity).GetComponent<StunEffect>();
-        //     stunEffect.Initialize(stunDuration, summon);
-        // }
+        Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, GetComponent<CircleCollider2D>().radius * 1.05f);
+        foreach (Collider2D collider in hit)
+        {
+            if (collider.TryGetComponent(out Player player))
+            {
+                StunEffect stunEffect = Instantiate(stunPrefab, player.transform.position, Quaternion.identity).GetComponent<StunEffect>();
+                stunEffect.gameObject.GetComponent<NetworkObject>().Spawn(true);
+                stunEffect.Initialize(stunDuration, player);
+            }
+            if (collider.TryGetComponent(out Summon summon))
+            {
+                StunEffect stunEffect = Instantiate(stunPrefab, player.transform.position, Quaternion.identity).GetComponent<StunEffect>();
+                stunEffect.gameObject.GetComponent<NetworkObject>().Spawn(true);
+                stunEffect.Initialize(stunDuration, summon);
+            }
+        }
     }
 }

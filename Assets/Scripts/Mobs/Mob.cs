@@ -12,6 +12,7 @@ public class Mob : NetworkBehaviour
     public float aggroRange = 10f;
     public NetworkVariable<float> health = new NetworkVariable<float>(1f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> GFXRotation = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public bool doesCollide = true;
     
     public Transform target;
     public Vector2 velocity;
@@ -25,9 +26,9 @@ public class Mob : NetworkBehaviour
     protected void Start()
     {
         if (!IsOwner) return;
-        if (randomRotation) GFX.rotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
+        if (randomRotation) GFXRotation.Value = Random.Range(0f, 360f);
         health.Value = maxHealth;
-        healthBar.value = health.Value / maxHealth;
+        if (healthBar != null) healthBar.value = health.Value / maxHealth;
     }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
@@ -119,7 +120,7 @@ public class Mob : NetworkBehaviour
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, GetComponent<CircleCollider2D>().radius);
         foreach (Collider2D collider in hit)
         {
-            if (collider.gameObject.TryGetComponent(out Mob mob))
+            if (collider.gameObject.TryGetComponent(out Mob mob) && mob.doesCollide)
             {
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 velocity -= hitAngle;

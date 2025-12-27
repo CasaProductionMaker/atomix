@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class Factory : Mob
@@ -30,10 +31,17 @@ public class Factory : Mob
         {
             for (int i = 0; i < spawnAmount; i++)
             {
-                Instantiate(AIPrefab, spawnPosition.position, Quaternion.identity);
+                spawnAIServerRpc(spawnPosition.position);
                 FindFirstObjectByType<MobSpawner>().mobsLeftInWave++;
             }
             lastSpawnTime = Time.time;
         }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void spawnAIServerRpc(Vector3 position)
+    {
+        GameObject AIInstance = Instantiate(AIPrefab, position, Quaternion.identity);
+        AIInstance.GetComponent<NetworkObject>().Spawn(true);
     }
 }

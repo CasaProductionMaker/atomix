@@ -74,7 +74,7 @@ public class PlayerElectronController : NetworkBehaviour
             playerAngle = Quaternion.Euler(0f, 0f, angle + 180f);
             Instantiate(quantumTunnelEffect, particle.transform.position, playerAngle);
             player.TakeDamageOwnerRpc(particle.selfDamage);
-            player.ApplyVelocity(direction.normalized * -particle.push);
+            player.ApplyVelocityOwnerRpc(direction.normalized * -particle.push);
         };
     }
 

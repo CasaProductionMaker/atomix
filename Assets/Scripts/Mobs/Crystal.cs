@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class Crystal : Mob
 {
@@ -20,7 +21,7 @@ public class Crystal : Mob
     void DoRadiation()
     {
         if (Time.time - lastHit < 1) return;
-        Instantiate(radiationEffect, transform);
+        spawnRadiationEffectServerRpc(GetComponent<NetworkObject>().NetworkObjectId);
         
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D collider in hit)
@@ -31,5 +32,18 @@ public class Crystal : Mob
             }
         }
         lastHit = Time.time;
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void spawnRadiationEffectServerRpc(ulong parentID)
+    {
+        NetworkObject electron = NetworkManager.SpawnManager.SpawnedObjects[parentID];
+
+        GameObject radiationInstance = Instantiate(radiationEffect);
+        NetworkObject radiationNO = radiationInstance.GetComponent<NetworkObject>();
+
+        radiationNO.Spawn(true);
+
+        radiationNO.TrySetParent(electron, true);
     }
 }
