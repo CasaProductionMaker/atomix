@@ -31,7 +31,7 @@ public class Solder : Electron
     {
         if (!isHealing) return;
 
-        if (DistanceToPlayer() > 0.1f)
+        if (DistanceToPlayer() > 0.3f)
         {
             transform.position = Vector2.Lerp(transform.position, player.transform.position, 0.3f);
         }

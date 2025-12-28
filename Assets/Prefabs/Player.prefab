@@ -586,7 +586,7 @@ MonoBehaviour:
   inventoryContainer: {fileID: 0}
   inventoryObject: {fileID: 0}
   inventoryElectronPrefab: {fileID: 537550996150551038, guid: ffdcd33b4936d41309c91d0ad755b51e, type: 3}
-  startingElectronPrefab: {fileID: 5937063045902205861, guid: eff8f243acf35498eb5047c822e72ad8, type: 3}
+  startingElectronPrefab: {fileID: 4758854254688527050, guid: 9ea77446ade4d44dcb48f2685fc6d438, type: 3}
   player: {fileID: 0}
   quantumTunnelEffect: {fileID: 2227606273192225237, guid: f1e363ff6e19f4b719753114cb5c4c3b, type: 3}
   attack: {fileID: 1120369429361536294, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
