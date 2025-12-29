@@ -50,6 +50,7 @@ public class Electron : NetworkBehaviour
                 isDead = false;
             }
         }
+        GetComponent<SpriteRenderer>().enabled = !isDead;
     }
 
     public float GetTimeSinceDied()

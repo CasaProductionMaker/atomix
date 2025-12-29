@@ -38,16 +38,23 @@ public class Player : NetworkBehaviour
         electronController = GetComponent<PlayerElectronController>();
         health.Value = maxHealth;
         healthBar.value = health.Value / maxHealth;
+        deathScreen = FindFirstObjectByType<MobSpawner>().deathScreen;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isDead) return;
         if (!IsOwner) {
             healthBar.value = health.Value / maxHealth;
             return;
         }
+
+        deathScreen.SetActive(isDead);
+        if (getHealth() > 0f)
+        {
+            isDead = false;
+        }
+        if (isDead) return;
 
         velocity += moveInput.action.ReadValue<Vector2>().normalized * speed;
 
@@ -100,16 +107,10 @@ public class Player : NetworkBehaviour
                 return;
             }
 
-            deathScreen.SetActive(true);
             bodyDamage = 0f;
             electronController.KillAllElectrons();
             isDead = true;
         }
-    }
-
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public Vector2 GetVelocity()
@@ -137,6 +138,14 @@ public class Player : NetworkBehaviour
     public void TakeDamageOwnerRpc(float damage)
     {
         health.Value -= damage;
+        healthBar.value = health.Value / getMaxHealth();
+    }
+
+    [Rpc(SendTo.Owner, InvokePermission = RpcInvokePermission.Everyone)]
+    public void ReviveOwnerRpc()
+    {
+        health.Value = getMaxHealth();
+        electronController.ReviveAllElectrons();
         healthBar.value = health.Value / getMaxHealth();
     }
 

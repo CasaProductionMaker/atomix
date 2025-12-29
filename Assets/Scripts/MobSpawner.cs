@@ -18,6 +18,7 @@ public class MobSpawner : NetworkBehaviour
     public bool isSpawningMobs = false;
 
     public TextMeshProUGUI waveText;
+    public GameObject deathScreen;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -54,6 +55,13 @@ public class MobSpawner : NetworkBehaviour
             waveNumber.Value++;
             mobsSpawnedInWave = 0;
             mobsLeftInWave += waveNumber.Value * 2;
+            foreach(Transform player in playerTransforms) {
+                Player script = player.GetComponent<Player>();
+                if(script.getHealth() <= 0)
+                {
+                    script.ReviveOwnerRpc();
+                }
+            }
         }
 
         if (Time.time - lastSpawnTime >= GetSpawnInterval() && mobsSpawnedInWave < waveNumber.Value * 2)

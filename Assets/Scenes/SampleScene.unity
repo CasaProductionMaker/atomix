@@ -23533,6 +23533,7 @@ MonoBehaviour:
   mobsLeftInWave: 0
   isSpawningMobs: 0
   waveText: {fileID: 596315171}
+  deathScreen: {fileID: 2035884980}
 --- !u!114 &2036607979
 MonoBehaviour:
   m_ObjectHideFlags: 0

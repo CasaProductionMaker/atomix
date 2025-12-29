@@ -83,8 +83,9 @@ public class PlayerElectronController : NetworkBehaviour
     {
         if(!IsOwner) return;
 
+        Debug.Log(player.getHealth() <= 0);
         if (player.getHealth() <= 0f) {
-            //KillAllElectrons();
+            KillAllElectrons();
             return;
         }
 
@@ -209,6 +210,21 @@ public class PlayerElectronController : NetworkBehaviour
 
                 electronReference.isPlayerDead = true;
                 electronReference.transform.position = transform.position;
+            }
+        }
+    }
+
+    public void ReviveAllElectrons()
+    {
+        for (int i = 0; i < maxElectronsPerShell.Length; i++)
+        {
+            List<SpawnedElectron> electrons = electronsPerShell[i];
+            foreach (SpawnedElectron electron in electrons)
+            {
+                if (electron.isEmptySlot) continue;
+                Electron electronReference = electron.electronReference;
+
+                electronReference.isPlayerDead = false;
             }
         }
     }
