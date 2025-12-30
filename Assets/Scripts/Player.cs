@@ -3,10 +3,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Unity.Netcode;
+using Unity.Collections;
+using TMPro;
 
 public class Player : NetworkBehaviour
 {
-
+    public NetworkVariable<FixedString64Bytes> playerUsername = new NetworkVariable<FixedString64Bytes>("", NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     Vector2 velocity;
     [SerializeField] float speed = 5f;
     [SerializeField] float maxHealth = 100f;
@@ -20,6 +22,7 @@ public class Player : NetworkBehaviour
 
     // UI
     public Slider healthBar;
+    public TextMeshProUGUI usernameText;
 
     // References
     public PlayerElectronController electronController;
@@ -39,6 +42,7 @@ public class Player : NetworkBehaviour
         health.Value = maxHealth;
         healthBar.value = health.Value / maxHealth;
         deathScreen = FindFirstObjectByType<MobSpawner>().deathScreen;
+        playerUsername.Value = new FixedString64Bytes(ChatManager.Singleton.username);
     }
 
     // Update is called once per frame
@@ -46,6 +50,7 @@ public class Player : NetworkBehaviour
     {
         if (!IsOwner) {
             healthBar.value = health.Value / maxHealth;
+            usernameText.text = playerUsername.Value.ToString();
             return;
         }
 
@@ -56,7 +61,7 @@ public class Player : NetworkBehaviour
         }
         if (isDead) return;
 
-        velocity += moveInput.action.ReadValue<Vector2>().normalized * speed;
+        if (!ChatManager.Singleton.isChatSelected()) velocity += moveInput.action.ReadValue<Vector2>().normalized * speed;
 
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, transform.localScale.x / 2);
         foreach (Collider2D collider in hit)

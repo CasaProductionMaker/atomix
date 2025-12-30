@@ -84,7 +84,7 @@ public class Mob : NetworkBehaviour
                 if (Random.value <= drop.spawnChance)
                 {
                     GameObject dropSpawned = Instantiate(electronDropPrefab, transform.position, Quaternion.identity);
-                    dropSpawned.GetComponent<NetworkObject>().Spawn();
+                    dropSpawned.GetComponent<NetworkObject>().Spawn(true);
                     ElectronDrop electronDrop = dropSpawned.GetComponent<ElectronDrop>();
                     electronDrop.spreadDirection = Random.insideUnitCircle.normalized;
                     electronDrop.electronDropID.Value = drop.dropPrefab.GetComponent<Electron>().electronID;
@@ -93,6 +93,10 @@ public class Mob : NetworkBehaviour
 
             FindFirstObjectByType<MobSpawner>().mobsLeftInWave--;
 
+            foreach(Transform child in gameObject.transform)
+            {
+                Destroy(child.gameObject);
+            }
             Destroy(gameObject);
         }
     }
@@ -103,6 +107,10 @@ public class Mob : NetworkBehaviour
         {
             FindFirstObjectByType<MobSpawner>().mobsLeftInWave--;
 
+            foreach(Transform child in gameObject.transform)
+            {
+                Destroy(child.gameObject);
+            }
             Destroy(gameObject);
         }
     }
@@ -111,6 +119,10 @@ public class Mob : NetworkBehaviour
     {
         if (IsDead())
         {
+            foreach(Transform child in gameObject.transform)
+            {
+                Destroy(child.gameObject);
+            }
             Destroy(gameObject);
         }
     }

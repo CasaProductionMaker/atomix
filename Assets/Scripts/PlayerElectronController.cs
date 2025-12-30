@@ -57,6 +57,7 @@ public class PlayerElectronController : NetworkBehaviour
 
         toggleInventory.action.performed += ctx =>
         {
+            if (ChatManager.Singleton.isChatSelected()) return;
             inventoryObject.SetActive(!inventoryObject.activeSelf);
         };
 
@@ -83,7 +84,6 @@ public class PlayerElectronController : NetworkBehaviour
     {
         if(!IsOwner) return;
 
-        Debug.Log(player.getHealth() <= 0);
         if (player.getHealth() <= 0f) {
             KillAllElectrons();
             return;
@@ -482,6 +482,10 @@ public class PlayerElectronController : NetworkBehaviour
     public void DestroyElectronServerRpc(ulong objectID)
     {
         Destroy(NetworkManager.SpawnManager.SpawnedObjects[objectID].gameObject);
+        foreach(Transform child in NetworkManager.SpawnManager.SpawnedObjects[objectID].transform)
+        {
+            Destroy(child.gameObject);
+        }
         Debug.Log("REMOVED " + objectID + " Object: " + NetworkManager.SpawnManager.SpawnedObjects[objectID].name);
     }
 
