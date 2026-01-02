@@ -478,6 +478,7 @@ public class PlayerElectronController : NetworkBehaviour
 
         DestroyElectronServerRpc(electron.electronReference.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
         electronsPerShell[shell][position] = new SpawnedElectron(true);
+        slotsFilled[shell][position] = false;
         UpdateElectronAngles();
         UpdateHotbarUI();
     }
