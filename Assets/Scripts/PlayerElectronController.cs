@@ -12,6 +12,7 @@ public class PlayerElectronController : NetworkBehaviour
     [SerializeField] float electronAngle = 0f;
     [SerializeField] float electronRotationSpeed = 2.5f;
     public List<SpawnedElectron>[] electronsPerShell = new List<SpawnedElectron>[3];
+    public List<bool>[] slotsFilled = new List<bool>[3];
     [SerializeField] int[] maxElectronsPerShell;
     [SerializeField] UISlot[] uiSlots;
 
@@ -40,6 +41,7 @@ public class PlayerElectronController : NetworkBehaviour
         for (int i = 0; i < maxElectronsPerShell.Length; i++)
         {
             electronsPerShell[i] = new List<SpawnedElectron>();
+            slotsFilled[i] = new List<bool>();
             for (int j = 0; j < maxElectronsPerShell[i]; j++)
             {
                 int slotID = i * 8 + j;
@@ -47,6 +49,7 @@ public class PlayerElectronController : NetworkBehaviour
                 if (slot != null) uiSlots[slotID] = slot.GetComponent<UISlot>();
                 slot.GetComponent<UISlot>().SetPEC(this);
                 electronsPerShell[i].Add(new SpawnedElectron(true));
+                slotsFilled[i].Add(false);
             }
         }
         Debug.Log(GameObject.Find("InventoryContent"));
@@ -329,7 +332,7 @@ public class PlayerElectronController : NetworkBehaviour
             List<SpawnedElectron> electrons = electronsPerShell[i];
             foreach (SpawnedElectron electron in electrons)
             {
-                if (electron.isEmptySlot)
+                if (electron.isEmptySlot && !slotsFilled[i][electrons.IndexOf(electron)])
                 {
                     shell = i;
                     position = electrons.IndexOf(electron);
@@ -340,6 +343,7 @@ public class PlayerElectronController : NetworkBehaviour
 
         if (shell == -1) return false;
 
+        slotsFilled[shell][position] = true;
         SpawnElectronOnNetworkServerRpc(electronID, shell, position, NetworkManager.LocalClientId);
 
         return true;

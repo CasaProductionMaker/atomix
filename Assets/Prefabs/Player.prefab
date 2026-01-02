@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3208687708
+  GlobalObjectIdHash: 2824851082
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -819,7 +819,7 @@ MonoBehaviour:
   deathScreen: {fileID: 0}
   moveInput: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   healthBar: {fileID: 6722744721402428730}
-  usernameText: {fileID: 0}
+  usernameText: {fileID: 8916528104324330058}
   electronController: {fileID: 0}
   myCamera: {fileID: 341145210012514065}
   nucleusPopEffect: {fileID: 5009873679629765903, guid: 4ce30c59389cb4101b7433ecf67da07f, type: 3}

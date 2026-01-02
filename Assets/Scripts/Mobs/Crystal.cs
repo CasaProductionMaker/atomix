@@ -21,7 +21,7 @@ public class Crystal : Mob
     void DoRadiation()
     {
         if (Time.time - lastHit < 1) return;
-        spawnRadiationEffectServerRpc(GetComponent<NetworkObject>().NetworkObjectId);
+        spawnRadiationEffectClientRpc();
         
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D collider in hit)
@@ -34,16 +34,9 @@ public class Crystal : Mob
         lastHit = Time.time;
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    public void spawnRadiationEffectServerRpc(ulong parentID)
+    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Everyone)]
+    public void spawnRadiationEffectClientRpc()
     {
-        NetworkObject electron = NetworkManager.SpawnManager.SpawnedObjects[parentID];
-
-        GameObject radiationInstance = Instantiate(radiationEffect);
-        NetworkObject radiationNO = radiationInstance.GetComponent<NetworkObject>();
-
-        radiationNO.Spawn(true);
-
-        radiationNO.TrySetParent(electron, true);
+        Instantiate(radiationEffect, transform);
     }
 }

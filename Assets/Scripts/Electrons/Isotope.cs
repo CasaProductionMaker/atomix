@@ -21,7 +21,7 @@ public class Isotope : Electron
     {
         if (isDead) return;
         if (Time.time - lastHit < 1) return;
-        spawnRadiationEffectServerRpc(GetComponent<NetworkObject>().NetworkObjectId);
+        spawnRadiationEffectClientRpc();
         
         Collider2D[] hit = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D collider in hit)
@@ -34,16 +34,9 @@ public class Isotope : Electron
         lastHit = Time.time;
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    public void spawnRadiationEffectServerRpc(ulong electronID)
+    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Everyone)]
+    public void spawnRadiationEffectClientRpc()
     {
-        NetworkObject electron = NetworkManager.SpawnManager.SpawnedObjects[electronID];
-
-        GameObject radiationInstance = Instantiate(radiationEffect);
-        NetworkObject radiationNO = radiationInstance.GetComponent<NetworkObject>();
-
-        radiationNO.Spawn(true);
-
-        radiationNO.TrySetParent(electron, true);
+        Instantiate(radiationEffect, transform);
     }
 }

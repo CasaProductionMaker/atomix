@@ -43,6 +43,7 @@ public class Player : NetworkBehaviour
         healthBar.value = health.Value / maxHealth;
         deathScreen = FindFirstObjectByType<MobSpawner>().deathScreen;
         playerUsername.Value = new FixedString64Bytes(ChatManager.Singleton.username);
+        usernameText.text = playerUsername.Value.ToString();
     }
 
     // Update is called once per frame
