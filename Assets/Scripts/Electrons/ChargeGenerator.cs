@@ -7,6 +7,7 @@ public class ChargeGenerator : Electron
     GameObject electricStormInstance;
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
@@ -56,7 +57,7 @@ public class ChargeGenerator : Electron
         {
             timeDied = Time.time;
             isDead = true;
-            electricStormInstance.GetComponent<ElectricStormSummon>().DestroySelfServerRpc();
+            if (electricStormInstance) electricStormInstance.GetComponent<ElectricStormSummon>().DestroySelfServerRpc();
         }
         if (isDead)
         {

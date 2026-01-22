@@ -8,10 +8,16 @@ public class Factory : Mob
     public float spawnRate = 10f;
     public int spawnAmount = 3;
     float lastSpawnTime = 0f;
+    public Sprite alternateSprite;
+    public float alternateSpriteChance = 0.1f;
 
     new void Start()
     {
         lastSpawnTime = Time.time;
+        if (Random.Range(0f, 1f) <= alternateSpriteChance)
+        {
+            GFX.GetComponent<SpriteRenderer>().sprite = alternateSprite;
+        }
         base.Start();
     }
     void Update()

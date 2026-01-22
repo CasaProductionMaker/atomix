@@ -6,6 +6,7 @@ public class Neutralizer : Electron
 
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;

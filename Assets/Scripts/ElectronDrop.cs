@@ -1,4 +1,4 @@
-using TMPro;
+using UnityEngine.UI;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ public class ElectronDrop : NetworkBehaviour
 {
     public NetworkVariable<int> electronDropID = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public Vector2 spreadDirection;
-    public SpriteRenderer electronImage;
+    public Image electronImage;
 
     void Start()
     {

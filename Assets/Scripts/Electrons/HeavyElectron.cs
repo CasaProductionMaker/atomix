@@ -5,6 +5,7 @@ public class HeavyElectron : Electron
     public float distanceFromPlayer = 5f;
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;

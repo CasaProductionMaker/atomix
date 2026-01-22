@@ -68,7 +68,7 @@ public class Mob : NetworkBehaviour
         GFX.rotation = Quaternion.Euler(0f, 0f, GFXRotation.Value);
     }
 
-    public void MoveTowardsTarget()
+    public virtual void MoveTowardsTarget()
     {
         if (target == null) return;
         Vector2 direction = (target.position - transform.position).normalized;

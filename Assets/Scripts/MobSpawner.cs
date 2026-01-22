@@ -10,6 +10,7 @@ public class MobSpawner : NetworkBehaviour
     public List<Transform> playerTransforms = new List<Transform>();
 
     public SpawnableMob[] spawnableMobs;
+    public NewMapSizeWave[] mapSizeWaves;
     private float lastSpawnTime = 0f;
 
     public NetworkVariable<int> waveNumber = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -23,17 +24,7 @@ public class MobSpawner : NetworkBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Position
-        borders[0].transform.position = new Vector3(mapSize.x + 0.75f, 0, 0);
-        borders[1].transform.position = new Vector3(0, -mapSize.y - 0.75f, 0);
-        borders[2].transform.position = new Vector3(-mapSize.x - 0.75f, 0, 0);
-        borders[3].transform.position = new Vector3(0, mapSize.y + 0.75f, 0);
-
-        //Scale
-        borders[0].transform.localScale = new Vector3(0.5f, 2 * mapSize.y + 2, 1);
-        borders[1].transform.localScale = new Vector3(2 * mapSize.x + 2, 0.5f, 1);
-        borders[2].transform.localScale = new Vector3(0.5f, 2 * mapSize.y + 2, 1);
-        borders[3].transform.localScale = new Vector3(2 * mapSize.x + 2, 0.5f, 1);
+        UpdateMapBounds();
     }
 
     public void startGame()
@@ -47,6 +38,15 @@ public class MobSpawner : NetworkBehaviour
     void Update()
     {
         waveText.text = "Wave " + waveNumber.Value;
+        foreach(NewMapSizeWave mapSizeWave in mapSizeWaves)
+        {
+            if(waveNumber.Value == mapSizeWave.waveNumber)
+            {
+                mapSize = mapSizeWave.mapSize;
+                UpdateMapBounds();
+            }
+        }
+        
         if (!isSpawningMobs) { return; }
         UpdatePlayerTransforms();
         if (mobsLeftInWave <= 1 && mobsSpawnedInWave >= waveNumber.Value * 2)
@@ -70,6 +70,21 @@ public class MobSpawner : NetworkBehaviour
             mobsSpawnedInWave++;
             lastSpawnTime = Time.time;
         }
+    }
+
+    public void UpdateMapBounds()
+    {
+        //Position
+        borders[0].transform.position = new Vector3(mapSize.x + 0.75f, 0, 0);
+        borders[1].transform.position = new Vector3(0, -mapSize.y - 0.75f, 0);
+        borders[2].transform.position = new Vector3(-mapSize.x - 0.75f, 0, 0);
+        borders[3].transform.position = new Vector3(0, mapSize.y + 0.75f, 0);
+
+        //Scale
+        borders[0].transform.localScale = new Vector3(0.5f, 2 * mapSize.y + 2, 1);
+        borders[1].transform.localScale = new Vector3(2 * mapSize.x + 2, 0.5f, 1);
+        borders[2].transform.localScale = new Vector3(0.5f, 2 * mapSize.y + 2, 1);
+        borders[3].transform.localScale = new Vector3(2 * mapSize.x + 2, 0.5f, 1);
     }
 
     public void UpdatePlayerTransforms()
@@ -124,6 +139,40 @@ public class MobSpawner : NetworkBehaviour
         newMob.GetComponent<NetworkObject>().Spawn();
     }
 
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SpawnMobAtPositionServerRpc(int mob_id, Vector2 position)
+    {
+        if (mob_id < 0 || mob_id >= spawnableMobs.Length) { return; }
+
+        SpawnableMob mobToSpawn = spawnableMobs[mob_id];
+
+        GameObject newMob = Instantiate(mobToSpawn.mobPrefab, position, Quaternion.identity);
+        newMob.GetComponent<NetworkObject>().Spawn();
+
+        mobsLeftInWave++;
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SetMapSizeServerRpc(Vector2 newMapSize)
+    {
+        SetMapSizeClientRpc(newMapSize);
+    }
+
+    [Rpc(SendTo.ClientsAndHost, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SetMapSizeClientRpc(Vector2 newMapSize)
+    {
+        mapSize = newMapSize;
+        UpdateMapBounds();
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SetWaveNumberServerRpc(int newWaveNumber)
+    {
+        waveNumber.Value = newWaveNumber;
+        mobsSpawnedInWave = 0;
+        mobsLeftInWave += waveNumber.Value * 2;
+    }
+
     float GetSpawnInterval()
     {
         return Mathf.Max(0.5f, 2f - (waveNumber.Value * 0.1f));
@@ -135,4 +184,11 @@ public struct SpawnableMob
 {
     public GameObject mobPrefab;
     public int firstWave;
+}
+
+[System.Serializable] 
+public struct NewMapSizeWave
+{
+    public Vector2 mapSize;
+    public int waveNumber;
 }

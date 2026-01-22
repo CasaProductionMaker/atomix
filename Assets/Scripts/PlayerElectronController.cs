@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -179,9 +178,20 @@ public class PlayerElectronController : NetworkBehaviour
                     }
                 }
 
-                float targetAngle = electronAngle + electron.angle;
-                float targetDistance = electron.distance * (attack.action.inProgress && electron.electronReference.doesExpand ? 1.5f : 1) * (defend.action.inProgress ? 0.7f : 1);
-                Vector2 targetPosition = new Vector2((float)Math.Sin(targetAngle) * targetDistance, (float)Math.Cos(targetAngle) * targetDistance) + (Vector2)transform.position;
+                float targetAngle = (electronAngle * electron.direction) + electron.angle;
+                RawPlatinum rawPlatinum = GetActiveRawPlatinum();
+                float targetDistance = electron.distance + (attack.action.inProgress && electron.electronReference.doesExpand ? 1 : 0) - (defend.action.inProgress ? 0.5f : 0);
+                if (rawPlatinum != null)
+                {
+                    targetDistance += rawPlatinum.size;
+                }
+                Vector2 targetPosition;
+                if (rawPlatinum != null)
+                {
+                    targetPosition = new Vector2((float)Math.Sin(targetAngle) * targetDistance, (float)Math.Cos(targetAngle) * targetDistance) + (Vector2)rawPlatinum.transform.position;
+                } else {
+                    targetPosition = new Vector2((float)Math.Sin(targetAngle) * targetDistance, (float)Math.Cos(targetAngle) * targetDistance) + (Vector2)transform.position;
+                }
                 float easing = 20f;
                 if (electronReference is HeavyElectron) easing = 10f;
                 electronReference.transform.position = Vector2.Lerp(electronReference.transform.position, targetPosition, easing * Time.deltaTime);
@@ -260,6 +270,26 @@ public class PlayerElectronController : NetworkBehaviour
         return null;
     }
 
+    public RawPlatinum GetActiveRawPlatinum()
+    {
+        for (int i = 0; i < maxElectronsPerShell.Length; i++)
+        {
+            List<SpawnedElectron> electrons = electronsPerShell[i];
+            foreach (SpawnedElectron electron in electrons)
+            {
+                if (electron.isEmptySlot) continue;
+                Electron electronReference = electron.electronReference;
+                
+                if (electronReference is RawPlatinum rawPlatinum && rawPlatinum.health > 0f)
+                {
+                    return rawPlatinum;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public Neutralizer GetActiveNeutralizer()
     {
         for (int i = 0; i < maxElectronsPerShell.Length; i++)
@@ -298,6 +328,27 @@ public class PlayerElectronController : NetworkBehaviour
         }
 
         return null;
+    }
+
+    public List<PlatinumPlate> GetPlatinumPlates()
+    {
+        List<PlatinumPlate> plates = new List<PlatinumPlate>();
+        for (int i = 0; i < maxElectronsPerShell.Length; i++)
+        {
+            List<SpawnedElectron> electrons = electronsPerShell[i];
+            foreach (SpawnedElectron electron in electrons)
+            {
+                if (electron.isEmptySlot) continue;
+                Electron electronReference = electron.electronReference;
+                
+                if (electronReference is PlatinumPlate plate)
+                {
+                    plates.Add(plate);
+                }
+            }
+        }
+
+        return plates;
     }
 
     public float GetHealthBonus()
@@ -454,6 +505,14 @@ public class PlayerElectronController : NetworkBehaviour
         }
     }
 
+    [Rpc(SendTo.Owner, InvokePermission = RpcInvokePermission.Everyone)]
+    public void AddElectronCommandOwnerRpc(int electronID)
+    {
+        LangObject langObject = GameObject.Find("LangObject").GetComponent<LangObject>();
+        GameObject electronPrefab = langObject.electronsInGame[electronID];
+        AddElectronToInventory(electronPrefab);
+    }
+
     public void RemoveElectronFromInventory(GameObject electronPrefab)
     {
         if (!electronInventory.ContainsKey(electronPrefab)) return;
@@ -529,6 +588,7 @@ public class SpawnedElectron
         this.electronPrefab = electronPrefab;
         this.angle = 0;
         direction = 1;
+        if (shell == 1) direction = -1;
         distance = 1f + (0.8f * shell);
         isEmptySlot = false;
         electronReference.spawnedElectronInfo = this;

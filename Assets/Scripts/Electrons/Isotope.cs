@@ -9,6 +9,7 @@ public class Isotope : Electron
     float lastHit = 0;
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;

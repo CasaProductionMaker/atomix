@@ -5211,16 +5211,21 @@ MonoBehaviour:
   aggroRange: 10
   health:
     m_InternalValue: 1
+  GFXRotation:
+    m_InternalValue: 0
+  doesCollide: 1
   target: {fileID: 0}
   velocity: {x: 0, y: 0}
   randomRotation: 1
   drops:
   - dropPrefab: {fileID: 4909559676495219610, guid: b5aa247adf476453aac0e42e156f9d2c, type: 3}
-    spawnChance: 1
+    spawnChance: 0.6
   electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
   healthBar: {fileID: 4089180240657756784}
   GFX: {fileID: 3591675327884296101}
   boosterEffect: {fileID: 1412126506562436981}
+  isFireOn:
+    m_InternalValue: 0
 --- !u!58 &2348980399041250608
 CircleCollider2D:
   m_ObjectHideFlags: 0

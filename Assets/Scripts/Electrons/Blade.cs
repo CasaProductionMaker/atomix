@@ -5,9 +5,11 @@ public class Blade : Electron
 {
     public float interval = 1f;
     Dictionary<Mob, float> damagedMobs = new Dictionary<Mob, float>();
+    Dictionary<AntiElectron, float> damagedAntiElectrons = new Dictionary<AntiElectron, float>();
     
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
@@ -27,6 +29,16 @@ public class Blade : Electron
                 {
                     damagedMobs[mob] = Time.time;
                     mob.TakeDamageServerRpc(damage);
+                }
+            }
+
+            if (collider.gameObject.TryGetComponent(out AntiElectron antiElectron))
+            {
+                if (antiElectron.isDead) continue;
+                if (!damagedAntiElectrons.ContainsKey(antiElectron) || Time.time - damagedAntiElectrons[antiElectron] >= interval)
+                {
+                    damagedAntiElectrons[antiElectron] = Time.time;
+                    antiElectron.TakeDamageOwnerRpc(GetDamage());
                 }
             }
         }

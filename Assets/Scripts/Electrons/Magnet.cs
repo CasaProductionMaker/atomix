@@ -6,6 +6,7 @@ public class Magnet : Electron
     public float radius = 3;
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;

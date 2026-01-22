@@ -7,6 +7,7 @@ public class Taser : Electron
     public GameObject stunEffectPrefab;
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
@@ -37,6 +38,20 @@ public class Taser : Electron
                 {
                     mob.transform.position = neutralizer.transform.position;
                 }
+            }
+
+            if (collider.gameObject.TryGetComponent(out AntiElectron antiElectron))
+            {
+                if (antiElectron.isDead) continue;
+                antiElectron.TakeDamageOwnerRpc(GetDamage());
+                health -= antiElectron.GetDamage();
+
+                Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
+                float totalDistance = size + (collider as CircleCollider2D).radius;
+                float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
+
+                transform.position += (Vector3)(-hitAngle * multiplier);
+                antiElectron.ApplyVelocityOwnerRpc(hitAngle * 0.02f);
             }
         }
     }

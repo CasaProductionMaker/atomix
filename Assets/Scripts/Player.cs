@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using Unity.Netcode;
 using Unity.Collections;
 using TMPro;
+using System.Collections.Generic;
 
 public class Player : NetworkBehaviour
 {
@@ -70,7 +70,7 @@ public class Player : NetworkBehaviour
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
                 mob.TakeDamageServerRpc(bodyDamage);
-                health.Value -= mob.bodyDamage;
+                TakeDamageOwnerRpc(mob.bodyDamage);
                 healthBar.value = health.Value / getMaxHealth();
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
                 velocity -= hitAngle * 1.5f;
@@ -143,6 +143,11 @@ public class Player : NetworkBehaviour
     [Rpc(SendTo.Owner, InvokePermission = RpcInvokePermission.Everyone)]
     public void TakeDamageOwnerRpc(float damage)
     {
+        List<PlatinumPlate> platinumPlates = electronController.GetPlatinumPlates();
+
+        damage -= platinumPlates.Count * platinumPlates[0].defense;
+        if (damage < 0f) damage = 0f;
+
         health.Value -= damage;
         healthBar.value = health.Value / getMaxHealth();
     }
@@ -155,6 +160,12 @@ public class Player : NetworkBehaviour
         healthBar.value = health.Value / getMaxHealth();
     }
 
+    [Rpc(SendTo.Owner, InvokePermission = RpcInvokePermission.Everyone)]
+    public void teleportPlayerOwnerRpc(Vector2 newPosition)
+    {
+        transform.position = newPosition;
+    }
+
     public float getHealth()
     {
         return health.Value;
@@ -163,5 +174,10 @@ public class Player : NetworkBehaviour
     {
         float additionalHealth = electronController.GetHealthBonus();
         return maxHealth + additionalHealth;
+    }
+
+    public float getBodyDamage()
+    {
+        return bodyDamage;
     }
 }

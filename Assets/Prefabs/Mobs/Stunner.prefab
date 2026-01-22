@@ -296,10 +296,17 @@ MonoBehaviour:
   aggroRange: 10
   health:
     m_InternalValue: 1
+  GFXRotation:
+    m_InternalValue: 0
+  doesCollide: 1
   target: {fileID: 0}
   velocity: {x: 0, y: 0}
   randomRotation: 1
-  drops: []
+  drops:
+  - dropPrefab: {fileID: 284119338277477781, guid: c21bd0703055849248de7379e1892416, type: 3}
+    spawnChance: 0.1
+  - dropPrefab: {fileID: 1899233886105600834, guid: 0650012d84b124f3e99534e5eefd08e8, type: 3}
+    spawnChance: 0.8
   electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
   healthBar: {fileID: 5991617509127066646}
   GFX: {fileID: 434769968155306709}
@@ -312,6 +319,10 @@ MonoBehaviour:
     shootPoint: {fileID: 4166192357265212148}
   shootInterval: 1
   bulletPrefab: {fileID: 1184232821548720291, guid: 0fe43cf0ca5fb47d39a40d583e24df86, type: 3}
+  shooterAngle1:
+    m_InternalValue: 0
+  shooterAngle2:
+    m_InternalValue: 0
 --- !u!58 &8206750867479898322
 CircleCollider2D:
   m_ObjectHideFlags: 0

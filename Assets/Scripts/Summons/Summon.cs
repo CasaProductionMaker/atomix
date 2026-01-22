@@ -126,6 +126,20 @@ public class Summon : NetworkBehaviour
                 TakeDamage(mob.bodyDamage);
                 OnDamaged();
             }
+
+            if (collider.gameObject.TryGetComponent(out AntiElectron antiElectron))
+            {
+                if (antiElectron.isDead) continue;
+                antiElectron.TakeDamageOwnerRpc(bodyDamage);
+                health.Value -= antiElectron.GetDamage();
+
+                Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
+                float totalDistance = GetComponent<CircleCollider2D>().radius + (collider as CircleCollider2D).radius;
+                float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
+
+                transform.position += (Vector3)(-hitAngle * multiplier);
+                antiElectron.ApplyVelocityOwnerRpc(hitAngle * 0.02f);
+            }
         }
     }
 

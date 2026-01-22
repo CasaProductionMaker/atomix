@@ -4,6 +4,7 @@ public class NormalElectron : Electron
 {
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;

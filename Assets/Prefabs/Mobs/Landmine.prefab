@@ -522,10 +522,15 @@ MonoBehaviour:
   aggroRange: 10
   health:
     m_InternalValue: 1
+  GFXRotation:
+    m_InternalValue: 0
+  doesCollide: 1
   target: {fileID: 0}
   velocity: {x: 0, y: 0}
   randomRotation: 0
-  drops: []
+  drops:
+  - dropPrefab: {fileID: 4919234270000783424, guid: ad3c0714099384be5a3997c4157c3d7c, type: 3}
+    spawnChance: 0.4
   electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
   healthBar: {fileID: 4154785364816609143}
   GFX: {fileID: 1733323142516605312}
@@ -534,6 +539,8 @@ MonoBehaviour:
   explosionTimer: 3
   explosionEffect: {fileID: 7791392378954121488, guid: b796c6958884240919fbf34e771580cb, type: 3}
   timerText: {fileID: 1492191859819350741}
+  timeLeftText:
+    m_InternalValue: 3
 --- !u!114 &3283160330475961490
 MonoBehaviour:
   m_ObjectHideFlags: 0

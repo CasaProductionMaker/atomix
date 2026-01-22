@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Netcode;
+using NUnit.Framework;
 
 public class Electron : NetworkBehaviour
 {
@@ -33,6 +34,11 @@ public class Electron : NetworkBehaviour
         GetComponent<CircleCollider2D>().radius = size;
     }
 
+    public void UpdateVisuals()
+    {
+        //GetComponent<SpriteRenderer>().enabled = !isDead;
+    }
+
     public void DieIfDead()
     {
         if (isPlayerDead) health = 0;
@@ -50,7 +56,13 @@ public class Electron : NetworkBehaviour
                 isDead = false;
             }
         }
-        GetComponent<SpriteRenderer>().enabled = !isDead;
+        SetGFXEnabledRpc(!isDead);
+    }
+
+    [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Everyone)]
+    public void SetGFXEnabledRpc(bool isEnabled)
+    {
+        GetComponent<SpriteRenderer>().enabled = isEnabled;
     }
 
     public float GetTimeSinceDied()
@@ -67,6 +79,11 @@ public class Electron : NetworkBehaviour
         {
             if (collider.gameObject.TryGetComponent(out Mob mob))
             {
+                if (mob is Phaser phaser)
+                {
+                    if (Random.Range(0f, 1f) < phaser.evasionChance) continue;
+                }
+
                 mob.TakeDamageServerRpc(GetDamage());
                 health -= mob.bodyDamage;
                 Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
@@ -80,6 +97,20 @@ public class Electron : NetworkBehaviour
                 {
                     mob.transform.position = neutralizer.transform.position;
                 }
+            }
+
+            if (collider.gameObject.TryGetComponent(out AntiElectron antiElectron))
+            {
+                if (antiElectron.isDead) continue;
+                antiElectron.TakeDamageOwnerRpc(GetDamage());
+                health -= antiElectron.GetDamage();
+
+                Vector2 hitAngle = (collider.transform.position - transform.position).normalized;
+                float totalDistance = size + (collider as CircleCollider2D).radius;
+                float multiplier = totalDistance - (collider.transform.position - transform.position).magnitude;
+
+                transform.position += (Vector3)(-hitAngle * multiplier);
+                antiElectron.ApplyVelocityOwnerRpc(hitAngle * 0.02f);
             }
         }
     }
@@ -110,8 +141,7 @@ public class Electron : NetworkBehaviour
     public virtual float GetDamage()
     {
         float returnDamage = damage;
-        
-        Debug.Log(gameObject.name);
+
         // Loop over build for cores
         for (int i = 0; i < player.getMaxElectronsPerShell().Length; i++)
         {
@@ -127,6 +157,25 @@ public class Electron : NetworkBehaviour
                 }
             }
         }
+
+        // Loop over build for platinum plates
+        float finalDamageMultiplier = 1f;
+        for (int i = 0; i < player.getMaxElectronsPerShell().Length; i++)
+        {
+            List<SpawnedElectron> electrons = player.electronsPerShell[i];
+            foreach (SpawnedElectron electron in electrons)
+            {
+                if (electron.isEmptySlot) continue;
+                Electron electronReference = electron.electronReference;
+                
+                if (electronReference is PlatinumPlate plate)
+                {
+                    finalDamageMultiplier -= plate.damageReduction;
+                }
+            }
+        }
+        if (finalDamageMultiplier < 0f) finalDamageMultiplier = 0f;
+        returnDamage *= finalDamageMultiplier;
 
         return returnDamage;
     }

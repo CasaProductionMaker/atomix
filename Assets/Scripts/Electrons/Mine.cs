@@ -9,6 +9,7 @@ public class Mine : Electron
 
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
@@ -31,6 +32,26 @@ public class Mine : Electron
         {
             if (collider.gameObject.TryGetComponent(out Mob _))
             {
+                spawnExplosionServerRpc(explosionRadius);
+
+                Collider2D[] explodeHit = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+                foreach(Collider2D explodeCollider in explodeHit)
+                {
+                    if(explodeCollider.TryGetComponent(out Player player))
+                    {
+                        player.TakeDamageOwnerRpc(explosionDamage);
+                    }
+                    if(explodeCollider.TryGetComponent(out Mob mob))
+                    {
+                        mob.TakeDamageServerRpc(explosionDamage);
+                    }
+                }
+                health = 0;
+            }
+
+            if (collider.gameObject.TryGetComponent(out AntiElectron antiElectron))
+            {
+                if (antiElectron.isDead) continue;
                 spawnExplosionServerRpc(explosionRadius);
 
                 Collider2D[] explodeHit = Physics2D.OverlapCircleAll(transform.position, explosionRadius);

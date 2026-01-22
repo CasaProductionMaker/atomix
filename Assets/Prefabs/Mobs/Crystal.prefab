@@ -82,14 +82,17 @@ MonoBehaviour:
   aggroRange: 10
   health:
     m_InternalValue: 1
+  GFXRotation:
+    m_InternalValue: 0
+  doesCollide: 1
   target: {fileID: 0}
   velocity: {x: 0, y: 0}
   randomRotation: 1
   drops:
   - dropPrefab: {fileID: 8868800446691998595, guid: 639a5f8e31a4c49beae4ab936dfe5da5, type: 3}
-    spawnChance: 1
+    spawnChance: 0.3
   - dropPrefab: {fileID: 399107527878193511, guid: 59ac1d30d620442ad9400121c15b8894, type: 3}
-    spawnChance: 1
+    spawnChance: 0.4
   electronDropPrefab: {fileID: 2780045768763145838, guid: 3758e450edd5540608194938a54fc412, type: 3}
   healthBar: {fileID: 2481825666336290933}
   GFX: {fileID: 7348998519997234623}

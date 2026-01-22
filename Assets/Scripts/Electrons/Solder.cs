@@ -8,6 +8,7 @@ public class Solder : Electron
     bool isHealing = false;
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;

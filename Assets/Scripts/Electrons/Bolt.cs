@@ -8,6 +8,7 @@ public class Bolt : Electron
     public GameObject lightningEffectPrefab;
     void Update()
     {
+        UpdateVisuals();
         if (!IsOwner) return;
         DieIfDead();
         if (isDead) return;
