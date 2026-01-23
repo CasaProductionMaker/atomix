@@ -11381,6 +11381,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   chatMessagePrefab: {fileID: 6707704639633597541, guid: 9e6566f85e05242ec90e421b71778e59, type: 3}
   chatContainer: {fileID: 2035478105}
+  chatScrollView: {fileID: 52029482}
   chatInput: {fileID: 2053296264}
   usernameInput: {fileID: 1770131038}
   sendInput: {fileID: 2782663975023700901, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
@@ -16217,7 +16218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.011764706}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.011764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -17988,7 +17989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.6627451}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -21990,7 +21991,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1684727379}
   m_HandleRect: {fileID: 1684727378}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -24801,6 +24802,8 @@ GameObject:
   - component: {fileID: 2035478105}
   - component: {fileID: 2035478107}
   - component: {fileID: 2035478106}
+  - component: {fileID: 2035478108}
+  - component: {fileID: 2035478109}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -24824,8 +24827,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 193.0744}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 193.07442}
+  m_SizeDelta: {x: 0, y: 193}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2035478106
 MonoBehaviour:
@@ -24867,6 +24870,38 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2035478108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035478104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: 0
+  m_MinHeight: 193
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!225 &2035478109
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035478104}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2035884980
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,12 +3,15 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class ChatManager : NetworkBehaviour
 {
     public static ChatManager Singleton;
     [SerializeField] GameObject chatMessagePrefab;
     [SerializeField] Transform chatContainer;
+    [SerializeField] ScrollRect chatScrollView;
     [SerializeField] TMP_InputField chatInput;
     [SerializeField] TMP_InputField usernameInput;
     public InputActionReference sendInput;
@@ -294,5 +297,7 @@ public class ChatManager : NetworkBehaviour
     {
         GameObject newMessage = Instantiate(chatMessagePrefab, chatContainer);
         newMessage.GetComponent<ChatMessage>().SetText(str);
+        Canvas.ForceUpdateCanvases();
+        chatScrollView.verticalNormalizedPosition = 0f;
     }
 }
