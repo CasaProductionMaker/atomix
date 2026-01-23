@@ -145,7 +145,7 @@ public class Player : NetworkBehaviour
     {
         List<PlatinumPlate> platinumPlates = electronController.GetPlatinumPlates();
 
-        damage -= platinumPlates.Count * platinumPlates[0].defense;
+        if (platinumPlates.Count > 0) damage -= platinumPlates.Count * platinumPlates[0].defense;
         if (damage < 0f) damage = 0f;
 
         health.Value -= damage;

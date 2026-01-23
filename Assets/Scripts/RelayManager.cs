@@ -29,15 +29,16 @@ public class RelayManager : MonoBehaviour
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(
-                allocation.RelayServer.IpV4, 
-                (ushort)allocation.RelayServer.Port, 
-                allocation.AllocationIdBytes, 
-                allocation.Key, 
-                allocation.ConnectionData, 
-                allocation.ConnectionData, 
-                true
-            );
+            // NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(
+            //     allocation.RelayServer.IpV4, 
+            //     (ushort)allocation.RelayServer.Port, 
+            //     allocation.AllocationIdBytes, 
+            //     allocation.Key, 
+            //     allocation.ConnectionData, 
+            //     allocation.ConnectionData, 
+            //     true
+            // );
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(allocation, "wss"));
             joinCodeText.text = "Start " + joinCode;
 
             NetworkManager.Singleton.StartHost();
@@ -54,16 +55,8 @@ public class RelayManager : MonoBehaviour
         try {
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
 
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(
-                joinAllocation.RelayServer.IpV4, 
-                (ushort)joinAllocation.RelayServer.Port, 
-                joinAllocation.AllocationIdBytes, 
-                joinAllocation.Key, 
-                joinAllocation.ConnectionData,
-                joinAllocation.HostConnectionData, 
-                true
-            );
-
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(joinAllocation, "wss"));
+            
             NetworkManager.Singleton.StartClient();
 
             ChatManager.Singleton.username = ChatManager.Singleton.username == "" ? GetRandomUsername() : ChatManager.Singleton.username;
